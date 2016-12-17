@@ -105,6 +105,11 @@
             return new CalculationParameters(18, 0, 90, "Qatar");
         },
 
+        // France UOIF
+        OUIF: function() {
+            return new CalculationParameters(12, 12, 0, "France UOIF");
+        },
+
         // Other
         Other: function() {
             return new CalculationParameters(0, 0, 0, "Other");
