@@ -106,7 +106,7 @@
         },
 
         // France UOIF
-        OUIF: function() {
+        UOIF: function() {
             return new CalculationParameters(12, 12, 0, "France UOIF");
         },
 
