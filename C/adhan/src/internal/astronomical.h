@@ -1,6 +1,7 @@
-//
-// Created by stormcaster on 22/06/17.
-//
+/*
+ * Created by stormcaster on 22/06/17.
+ */
+
 
 #ifndef C_ASTRONOMICAL_H
 #define C_ASTRONOMICAL_H

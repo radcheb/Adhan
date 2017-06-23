@@ -1,6 +1,7 @@
-//
-// Created by stormcaster on 22/06/17.
-//
+/*
+ * Created by stormcaster on 22/06/17.
+ */
+
 
 #include "math.h"
 #include "prayer_times.h"

@@ -1,6 +1,7 @@
-//
-// Created by stormcaster on 22/06/17.
-//
+/*
+ * Created by stormcaster on 22/06/17.
+ */
+
 
 #include "data_components.h"
 #include "internal/coordinates.h"

@@ -1,6 +1,6 @@
-//
-// Created by stormcaster on 22/06/17.
-//
+/*
+ * Created by stormcaster on 22/06/17.
+ */
 
 #include <time.h>
 #include <stdlib.h>
@@ -8,11 +8,9 @@
 #include "solar_time.h"
 #include "../data_components.h"
 #include "calendrical_helper.h"
-#include "coordinates.h"
-#include "solar_coordinates.h"
 #include "astronomical.h"
 
-inline solar_time_t *new_solar_time(struct tm *today, coordinates_t *coordinates) {
+inline solar_time_t *new_solar_time(struct tm *today, coordinates_t *coordinates){
 
     struct tm *tomorrow = add_yday(today, 1);
 
@@ -63,7 +61,7 @@ double hourAngle(solar_time_t *this_solar_time, double angle, bool afterTransit)
 }
 
 double afternoon(solar_time_t *this_solar_time, shadow_length shadowLength) {
-    // TODO (from Swift version) source shadow angle calculation
+    /* TODO (from Swift version) source shadow angle calculation */
     const double tangent = fabs(this_solar_time->observer->latitude - this_solar_time->solar->declination);
     const double inverse = shadowLength + tan(to_radius(tangent));
     const double angle = to_degrees(atan(1.0 / inverse));

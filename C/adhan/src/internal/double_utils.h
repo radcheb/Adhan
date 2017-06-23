@@ -1,7 +1,8 @@
-//
-// Created by stormcaster on 22/06/17.
-//
-#include <math.h>
+/*
+ * Created by stormcaster on 22/06/17.
+ */
+
+#include "math.h"
 
 #ifndef C_DOUBLE_UTILS_H
 #define C_DOUBLE_UTILS_H

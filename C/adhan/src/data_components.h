@@ -1,6 +1,6 @@
-//
-// Created by stormcaster on 22/06/17.
-//
+/*
+ * Created by stormcaster on 22/06/17.
+ */
 
 #include <stdbool.h>
 #include <time.h>

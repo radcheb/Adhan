@@ -1,6 +1,7 @@
-//
-// Created by stormcaster on 22/06/17.
-//
+/*
+ * Created by stormcaster on 22/06/17.
+ */
+
 
 #ifndef C_HIGH_LATITUDE_RULE_H
 #define C_HIGH_LATITUDE_RULE_H

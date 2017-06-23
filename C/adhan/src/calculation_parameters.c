@@ -1,6 +1,6 @@
-//
-// Created by stormcaster on 22/06/17.
-//
+/*
+ * Created by stormcaster on 22/06/17.
+ */
 
 #include "calculation_parameters.h"
 

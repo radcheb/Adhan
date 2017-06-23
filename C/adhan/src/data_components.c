@@ -1,6 +1,6 @@
-//
-// Created by stormcaster on 22/06/17.
-//
+/*
+ * Created by stormcaster on 22/06/17.
+ */
 
 #include <float.h>
 #include <math.h>
@@ -16,7 +16,7 @@ time_components *from_double(double value) {
     return new_time_components((int *) &hours, (int *) &minutes, (int *) &seconds);
 }
 
-inline time_components *new_time_components(int *hours, int *minutes, int *seconds) {
+inline time_components *new_time_components(int *hours, int *minutes, int *seconds){
     return (time_components *) (hours, minutes, seconds);
 }
 
@@ -25,7 +25,7 @@ struct tm *get_tm_date(const time_components *time_components, const date_compon
             date_components->day, date_components->month - 1, date_components->year - 1900);
 }
 
-inline date_components *new_date_components(int *day, int *month, int *year) {
+inline date_components *new_date_components(int *day, int *month, int *year){
     return (date_components *) (day, month, year);
 }
 
