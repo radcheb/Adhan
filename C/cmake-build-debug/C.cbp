@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="C"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/stormcaster/workspace/Adhan/C/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/stormcaster/workspace/Adhan/C/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/stormcaster/workspace/Adhan/C/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="C">
+				<Option output="/home/stormcaster/workspace/Adhan/C/cmake-build-debug/C" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/stormcaster/workspace/Adhan/C/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 C"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="C/fast">
+				<Option output="/home/stormcaster/workspace/Adhan/C/cmake-build-debug/C" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/stormcaster/workspace/Adhan/C/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 C/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/stormcaster/workspace/Adhan/C/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/CMakeLists.txt">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/calculation_method.h">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/calculation_parameters.c">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/calculation_parameters.h">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/data_components.c">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/data_components.h">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/high_latitude_rule.h">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/internal/astronomical.c">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/internal/astronomical.h">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/internal/calendrical_helper.c">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/internal/calendrical_helper.h">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/internal/coordinates.h">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/internal/double_utils.h">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/internal/shadow.h">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/internal/solar_coordinates.c">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/internal/solar_coordinates.h">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/internal/solar_time.c">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/internal/solar_time.h">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/madhab.h">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/prayer.h">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/prayer_adjustments.h">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/prayer_times.c">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/src/prayer_times.h">
+			<Option target="C"/>
+		</Unit>
+		<Unit filename="/home/stormcaster/workspace/Adhan/C/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
