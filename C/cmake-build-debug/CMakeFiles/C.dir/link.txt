@@ -1,1 +1,0 @@
-/usr/bin/cc  -g   CMakeFiles/C.dir/src/data_components.c.o CMakeFiles/C.dir/src/internal/solar_coordinates.c.o CMakeFiles/C.dir/src/internal/solar_time.c.o CMakeFiles/C.dir/src/internal/astronomical.c.o CMakeFiles/C.dir/src/internal/calendrical_helper.c.o CMakeFiles/C.dir/src/calculation_parameters.c.o CMakeFiles/C.dir/src/prayer_times.c.o  -o C 

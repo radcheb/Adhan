@@ -6,6 +6,9 @@
 build/
 DerivedData
 
+**/cmake-build-debug
+**/target
+
 ## Various settings
 *.pbxuser
 !default.pbxuser
