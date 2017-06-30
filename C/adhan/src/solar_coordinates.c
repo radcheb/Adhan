@@ -4,11 +4,11 @@
 
 
 #include <stdlib.h>
-#include "solar_coordinates.h"
-#include "calendrical_helper.h"
-#include "astronomical.h"
+#include "include/solar_coordinates.h"
+#include "include/calendrical_helper.h"
+#include "include/astronomical.h"
 #include "math.h"
-#include "double_utils.h"
+#include "include/double_utils.h"
 
 inline solar_coordinates_t *new_solar_coordinates(double julianDay){
 

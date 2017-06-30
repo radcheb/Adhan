@@ -3,9 +3,8 @@
  */
 
 
-#include "double_utils.h"
-#include "astronomical.h"
-#include "coordinates.h"
+#include "include/double_utils.h"
+#include "include/astronomical.h"
 
 double to_radius(double deg) {
     return deg * ( M_PI/ 180.0 );

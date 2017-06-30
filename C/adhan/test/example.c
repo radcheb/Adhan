@@ -1,7 +1,7 @@
-#include "../internal/coordinates.h"
-#include "../data_components.h"
-#include "../calculation_parameters.h"
-#include "../prayer_times.h"
+#include "../include/coordinates.h"
+#include "../include/data_components.h"
+#include "../include/calculation_parameters.h"
+#include "../include/prayer_times.h"
 
 int main (int argc, char *argv[]){
     const coordinates_t * coordinates = new_coordinates(35.78056, -78.6389);

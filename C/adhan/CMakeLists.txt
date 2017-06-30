@@ -1,21 +1,57 @@
-cmake_minimum_required(VERSION 3.5)
-project(.)
-message("Installation target directory is: " ${CMAKE_INSTALL_PREFIX})
-message("To override this value, use 'make -DCMAKE_INSTALL_PREFIX=$DIR'")
+PROJECT(adhan)
+SET(CMAKE_PROJECT_NAME adhan)
 
-set(COMPILE_FLAGS "-ansi -pedantic -Wall -O2")
-set( CMAKE_C_FLAGS  "${CMAKE_C_FLAGS} ${COMPILE_FLAGS}" "${CMAKE_ENABLE_C99}")
+CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 
-set(HEADER_FILES
-        src/data_components.h src/internal/shadow.h src/internal/double_utils.h src/internal/solar_coordinates.h src/internal/solar_time.h src/internal/coordinates.h src/internal/calendrical_helper.h src/internal/astronomical.h src/calculation_method.h src/calculation_parameters.h src/madhab.h src/high_latitude_rule.h src/prayer.h src/prayer_adjustments.h src/prayer_times.h)
+# Mode debug par defaut
+IF("${CMAKE_BUILD_TYPE}" STREQUAL "")
+    SET(CMAKE_BUILD_TYPE "DEBUG")
+    ADD_DEFINITIONS(-DNOSYSLOG=1)
+ENDIF("${CMAKE_BUILD_TYPE}" STREQUAL "")
 
-set(SOURCE_FILES
-        src/data_components.c src/internal/solar_coordinates.c src/internal/solar_time.c src/internal/astronomical.c src/internal/calendrical_helper.c src/calculation_parameters.c src/prayer_times.c src/samples/example.c)
+IF("${CMAKE_BUILD_TYPE}" STREQUAL "DEBUG")
+    SET(FORMAT_CODE style)
+ENDIF("${CMAKE_BUILD_TYPE}" STREQUAL "DEBUG")
 
-add_library(adhan STATIC ${HEADER_FILES} ${SOURCE_FILES} )
+SET(CMAKE_C_FLAGS_RELEASE "-O2 -DNDEBUG")
+SET(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
+SET(CMAKE_C_FLAGS_DEBUG " -DDEBUG ")
+SET(CMAKE_CXX_FLAGS_DEBUG " -DDEBUG")
+SET(CPACK_SOURCE_IGNORE_FILES "/build.*/;/deb/;/CVS/;/\\\\.svn/;/\\\\.git/;\\\\.swp$;/*~;tags;\\\\.pcs$;")
 
-install( FILES ${HEADER_FILES} DESTINATION "include/" )
-install( TARGETS adhan DESTINATION "lib/" )
+SET(MAJOR 1)
+SET(MINOR 0)
+SET(PATCH 1)
+SET(VERSION ${MAJOR}.${MINOR}.${PATCH})
 
-add_executable( example src/samples/example.c)
-#target_link_libraries( sample adhan -lm )
+ADD_DEFINITIONS("-fgnu89-inline")
+
+ADD_DEFINITIONS("-Wall -ggdb3  -Wfatal-errors")
+ADD_DEFINITIONS("-fno-builtin-malloc -fno-builtin-realloc -fno-builtin-calloc -fno-builtin-free -fno-strict-aliasing -fno-omit-frame-pointer")
+ADD_DEFINITIONS("-fstrict-aliasing")
+
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
+INCLUDE_DIRECTORIES(include)
+
+
+SET(ADAHN_SRC
+        src/astronomical.c
+        src/solar_coordinates.c
+        src/solar_time.c
+        src/solar_coordinates.c
+        src/calculation_parameters.c
+        src/prayer_times.c
+        src/data_components.c
+        src/calendrical_helper.c
+  )
+
+
+# Executable for bidviser
+ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} ${ADAHN_SRC})
+TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME}  m  )
+
+
+#set(TEST_ADHAN test/example.c)
+
+#add_executable( test-adhan ${TEST_ADHAN})
+#target_link_libraries(test-adhan -lm )

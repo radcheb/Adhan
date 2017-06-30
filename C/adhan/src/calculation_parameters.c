@@ -2,7 +2,7 @@
  * Created by stormcaster on 22/06/17.
  */
 
-#include "calculation_parameters.h"
+#include "include/calculation_parameters.h"
 
 inline calculation_parameters_t *new_calculation_parameters(double fajrAngle, double ishaAngle) {
     calculation_parameters_t *calculation_parameters = (calculation_parameters_t *) malloc(

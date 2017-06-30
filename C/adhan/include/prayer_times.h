@@ -4,7 +4,7 @@
 
 
 #include "data_components.h"
-#include "internal/coordinates.h"
+#include "coordinates.h"
 #include "data_components.h"
 #include "calculation_parameters.h"
 #include "prayer.h"

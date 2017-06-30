@@ -5,10 +5,10 @@
 #include <time.h>
 #include <stdlib.h>
 #include "math.h"
-#include "solar_time.h"
-#include "../data_components.h"
-#include "calendrical_helper.h"
-#include "astronomical.h"
+#include "include/solar_time.h"
+#include "include/data_components.h"
+#include "include/calendrical_helper.h"
+#include "include/astronomical.h"
 
 inline solar_time_t *new_solar_time(struct tm *today, coordinates_t *coordinates){
 

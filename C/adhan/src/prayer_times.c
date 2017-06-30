@@ -4,8 +4,8 @@
 
 
 #include "math.h"
-#include "prayer_times.h"
-#include "internal/solar_time.h"
+#include "include/prayer_times.h"
+#include "include/solar_time.h"
 
 inline prayer_times_t *
 new_prayer_times(coordinates_t *coordinates, date_components *date, calculation_parameters_t *params) {

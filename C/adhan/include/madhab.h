@@ -3,7 +3,7 @@
  */
 
 
-#include "internal/shadow.h"
+#include "shadow.h"
 
 #ifndef C_MADHAB_H
 #define C_MADHAB_H
