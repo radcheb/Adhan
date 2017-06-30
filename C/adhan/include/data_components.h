@@ -49,6 +49,6 @@ struct tm *add_yday(struct tm *when, int amount);
 
 struct tm *resolve_time_2(int year, int month, int day);
 
-#endif //C_DATA_COMPONENTS_H
-
 struct tm *get_date_components(struct tm *date);
+
+#endif //C_DATA_COMPONENTS_H
