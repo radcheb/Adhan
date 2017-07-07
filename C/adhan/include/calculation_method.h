@@ -61,4 +61,26 @@ typedef enum {
             OTHER
 } calculation_method;
 
+static char * get_calculation_method_name(calculation_method method){
+    switch (method){
+        case MUSLIM_WORLD_LEAGUE:
+            return "Muslim World League";
+        case EGYPTIAN:
+            return "Egyptian";
+        case KARACHI:
+            return "Karachi";
+        case UMM_AL_QURA:
+            return "Umm Al Qura";
+        case GULF:
+            return "gulf";
+        case MOON_SIGHTING_COMMITTEE:
+            return "Moon Sighting Committee";
+        case KUWAIT:
+            return "Kuwait";
+        case QATAR:
+            return "Qatar";
+        case OTHER:
+            return "Custom";
+    }
+}
 #endif //C_CALCULATION_METHOD_H

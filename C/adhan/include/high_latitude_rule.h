@@ -26,4 +26,14 @@ typedef enum {
             TWILIGHT_ANGLE
 } high_latitude_rule_t;
 
+static char *get_high_latitude_rule_name(high_latitude_rule_t high_latitude_rule){
+    switch (high_latitude_rule){
+        case MIDDLE_OF_THE_NIGHT:
+            return "Middle of the night";
+        case SEVENTH_OF_THE_NIGHT:
+            return "Seventh of the night";
+        case TWILIGHT_ANGLE:
+            return "Twilight angle";
+    }
+}
 #endif //C_HIGH_LATITUDE_RULE_H

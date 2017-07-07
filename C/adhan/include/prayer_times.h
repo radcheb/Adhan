@@ -21,7 +21,7 @@ typedef struct {
     const struct tm *isha;
 } prayer_times_t;
 
-inline prayer_times_t* new_prayer_times(coordinates_t* coordinates, date_components* date, calculation_parameters_t* params);
+prayer_times_t* new_prayer_times(coordinates_t* coordinates, date_components_t* date, calculation_parameters_t* params);
 
 prayer_times_t* new_prayer_times2(coordinates_t* coordinates, struct tm* date, calculation_parameters_t* parameters);
 

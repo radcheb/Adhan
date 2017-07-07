@@ -10,6 +10,9 @@
 #include "coordinates.h"
 #include "solar_coordinates.h"
 #include "shadow.h"
+#include "data_components.h"
+#include "calendrical_helper.h"
+#include "astronomical.h"
 
 typedef struct {
     const double transit;
@@ -22,7 +25,7 @@ typedef struct {
     double approximateTransit;
 } solar_time_t;
 
-inline solar_time_t *new_solar_time(struct tm *today, coordinates_t *coordinates);
+solar_time_t *new_solar_time(struct tm *today, coordinates_t *coordinates);
 
 double hourAngle(solar_time_t *this_solar_time, double angle, bool afterTransit);
 

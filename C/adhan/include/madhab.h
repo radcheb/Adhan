@@ -20,7 +20,7 @@ typedef enum {
             HANAFI
 } madhab_t;
 
-shadow_length getShadowLength(madhab_t madhab) {
+static inline shadow_length getShadowLength(madhab_t madhab) {
         switch(madhab){
             case SHAFI:
                 return SINGLE;
@@ -29,5 +29,14 @@ shadow_length getShadowLength(madhab_t madhab) {
             default:
                 return SINGLE;
         }
+}
+
+static char *get_madhab_name(madhab_t madhab){
+    switch (madhab){
+        case SHAFI:
+            return "Shafi";
+        case HANAFI:
+            return "hanafi";
+    }
 }
 #endif //C_MADHAB_H

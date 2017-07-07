@@ -26,22 +26,40 @@ typedef struct {
     const double isha;
 }night_portions_t;
 
-inline calculation_parameters_t *_INIT_CALCULATION_PARAMETERS(double fajrAngle, double ishaAngle, int ishaInterval) {
-    return (calculation_parameters_t *) (OTHER, fajrAngle, ishaAngle, ishaInterval, SHAFI, MIDDLE_OF_THE_NIGHT, INIT_PRAYER_ADJUSTMENTS());
+static inline calculation_parameters_t * _INIT_CALCULATION_PARAMETERS(double fajrAngle, double ishaAngle, int ishaInterval) {
+    calculation_parameters_t *calculation_parameters = (calculation_parameters_t *)malloc(sizeof(calculation_parameters_t));
+
+    *(calculation_parameters->method ) = OTHER;
+    calculation_parameters->fajrAngle = fajrAngle;
+    calculation_parameters->ishaAngle = ishaAngle;
+    calculation_parameters->ishaInterval = ishaInterval;
+    *(calculation_parameters->madhab) = SHAFI;
+    *(calculation_parameters->highLatitudeRule) = MIDDLE_OF_THE_NIGHT;
+    calculation_parameters->adjustments = INIT_PRAYER_ADJUSTMENTS();
+    return calculation_parameters;
 }
 
-inline calculation_parameters_t *INIT_CALCULATION_PARAMETERS() {
-    return (calculation_parameters_t *) (OTHER, 0, 0, 0, SHAFI, MIDDLE_OF_THE_NIGHT, INIT_PRAYER_ADJUSTMENTS());
+static inline calculation_parameters_t *INIT_CALCULATION_PARAMETERS() {
+    calculation_parameters_t *calculation_parameters = (calculation_parameters_t *)malloc(sizeof(calculation_parameters_t));
+
+    *(calculation_parameters->method ) = OTHER;
+    calculation_parameters->fajrAngle = 0;
+    calculation_parameters->ishaAngle = 0;
+    calculation_parameters->ishaInterval = 0;
+    *(calculation_parameters->madhab) = SHAFI;
+    *(calculation_parameters->highLatitudeRule) = MIDDLE_OF_THE_NIGHT;
+    calculation_parameters->adjustments = INIT_PRAYER_ADJUSTMENTS();
+    return calculation_parameters;
 }
 
-inline calculation_parameters_t *new_calculation_parameters(double fajrAngle, double ishaAngle);
+static inline calculation_parameters_t *new_calculation_parameters(double fajrAngle, double ishaAngle);
 
-inline calculation_parameters_t *new_calculation_parameters2(double fajrAngle, int ishaInterval);
+static inline calculation_parameters_t *new_calculation_parameters2(double fajrAngle, int ishaInterval);
 
-inline calculation_parameters_t *
+static inline calculation_parameters_t *
 new_calculation_parameters3(double fajrAngle, double ishaAngle, calculation_method *method);
 
-inline calculation_parameters_t *
+static inline calculation_parameters_t *
 new_calculation_parameters4(double fajrAngle, int ishaInterval, calculation_method* method);
 
 night_portions_t* new_night_portions(double fajr, double isha);

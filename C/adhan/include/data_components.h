@@ -12,32 +12,32 @@ typedef struct {
     int hours;
     int minutes;
     int seconds;
-} time_components;
+} time_components_t;
 
 typedef struct {
     int day;
     int month;
     int year;
-} date_components;
+} date_components_t;
 
 // TimeComponents
-time_components *from_double(double value);
+inline time_components_t from_double(double value);
 
-inline time_components *new_time_components(int *hours, int *minutes, int *seconds);
+static inline time_components_t new_time_components(int hours, int minutes, int seconds);
 
-struct tm *get_tm_date(const time_components *time_components, const date_components *date_components);
+static inline struct tm get_tm_date(const time_components_t *time_components, const date_components_t *date_components);
 
 // DateComponents
-inline date_components *new_date_components(int *day, int *month, int *year);
+static inline date_components_t new_date_components(int day, int month, int year);
 
-date_components *from_tm(const struct tm *date);
+inline date_components_t from_tm(const struct tm *date);
 
 // CalendarUtil
 bool is_leap_year(int year);
 
-struct tm *round_minute(struct tm *date);
+inline struct tm round_minute(struct tm *date);
 
-struct tm *resolve_time(date_components *date_components);
+struct tm *resolve_time(date_components_t *date_components);
 
 struct tm *add_seconds(struct tm *when, int amount);
 

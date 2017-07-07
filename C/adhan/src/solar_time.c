@@ -6,11 +6,8 @@
 #include <stdlib.h>
 #include "math.h"
 #include "include/solar_time.h"
-#include "include/data_components.h"
-#include "include/calendrical_helper.h"
-#include "include/astronomical.h"
 
-inline solar_time_t *new_solar_time(struct tm *today, coordinates_t *coordinates){
+solar_time_t *new_solar_time(struct tm *today, coordinates_t *coordinates){
 
     struct tm *tomorrow = add_yday(today, 1);
 

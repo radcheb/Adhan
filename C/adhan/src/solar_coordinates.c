@@ -10,7 +10,7 @@
 #include "math.h"
 #include "include/double_utils.h"
 
-inline solar_coordinates_t *new_solar_coordinates(double julianDay){
+solar_coordinates_t *new_solar_coordinates(double julianDay){
 
     double T = julianCentury(julianDay);
     double L0 = meanSolarLongitude(/* julianCentury */ T);

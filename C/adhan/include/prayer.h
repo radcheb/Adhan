@@ -16,7 +16,7 @@ typedef enum {
     ISHA
 } prayer_t;
 
-inline prayer_t* init_prayer(prayer_t prayer){
+static inline prayer_t* init_prayer(prayer_t prayer){
     prayer_t * rs = (prayer_t*)malloc(sizeof(prayer_t));
     *rs = prayer;
     return rs;

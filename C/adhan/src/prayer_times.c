@@ -4,11 +4,11 @@
 
 
 #include "math.h"
-#include "include/prayer_times.h"
-#include "include/solar_time.h"
+#include "../include/prayer_times.h"
+#include "../include/solar_time.h"
 
 inline prayer_times_t *
-new_prayer_times(coordinates_t *coordinates, date_components *date, calculation_parameters_t *params) {
+new_prayer_times(coordinates_t *coordinates, date_components_t *date, calculation_parameters_t *params) {
     return new_prayer_times2(coordinates, resolve_time(date), params);
 }
 
@@ -25,13 +25,14 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, struct tm *date, c
 
     solar_time_t *solar_time = new_solar_time(date, coordinates);
 
-    time_components *time_components1 = from_double(solar_time->transit);
+    time_components_t *time_components1 = (time_components_t *) malloc(sizeof(time_components_t));
+    *time_components1 = (from_double(solar_time->transit));
     struct tm *transit = time_components1 ? get_date_components(date) : NULL;
 
-    time_components1 = from_double(solar_time->sunrise);
+    *time_components1 = from_double(solar_time->sunrise);
     struct tm *sunriseComponents = time_components1 ? get_date_components(date) : NULL;
 
-    time_components1 = from_double(solar_time->sunset);
+    *time_components1 = from_double(solar_time->sunset);
     struct tm *sunsetComponents = time_components1 ? get_date_components(date) : NULL;
 
     bool error = !(transit && sunriseComponents && sunsetComponents);
@@ -41,7 +42,7 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, struct tm *date, c
         tempSunrise = sunriseComponents;
         tempMaghrib = sunsetComponents;
 
-        time_components1 = from_double(afternoon(solar_time, getShadowLength(*(parameters->madhab))));
+        *time_components1 = from_double(afternoon(solar_time, getShadowLength(*(parameters->madhab))));
         if (time_components1) {
             tempAsr = get_date_components(date);
         }
@@ -50,7 +51,7 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, struct tm *date, c
         struct tm *tomorrowSunrise = add_yday(sunriseComponents, 1);
         long night = (long) mktime(tomorrowSunrise) - mktime(sunsetComponents);
 
-        time_components1 = from_double(hourAngle(solar_time, -parameters->fajrAngle, false));
+        *time_components1 = from_double(hourAngle(solar_time, -parameters->fajrAngle, false));
         if (time_components1) {
             tempFajr = get_date_components(date);
         }
@@ -78,7 +79,7 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, struct tm *date, c
         if (parameters->ishaInterval > 0) {
             tempIsha = add_seconds(tempMaghrib, parameters->ishaInterval * 60);
         } else {
-            time_components1 = from_double(hourAngle(solar_time, -parameters->ishaAngle, true));
+            *time_components1 = from_double(hourAngle(solar_time, -parameters->ishaAngle, true));
             if (time_components1) {
                 tempIsha = get_date_components(date);
             }
@@ -130,19 +131,30 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, struct tm *date, c
 
     if (error || !tempAsr) {
         // if we don't have all prayer times then initialization failed
-        return (prayer_times_t *) (NULL, NULL, NULL, NULL, NULL, NULL);
+        return NULL;
     } else {
         prayer_times_t *prayer_times = (prayer_times_t *) malloc(sizeof(prayer_times_t));
-        *(struct tm **) &prayer_times->fajr = round_minute(add_minutes(tempFajr, parameters->adjustments->fajr));
-        *(struct tm **) &prayer_times->sunrise = round_minute(
-                add_minutes(tempSunrise, parameters->adjustments->sunrise));
-        *(struct tm **) &prayer_times->dhuhr = round_minute(
-                add_minutes(tempDhuhr, parameters->adjustments->dhuhr + dhuhrOffsetInMinutes));
-        *(struct tm **) &prayer_times->asr = round_minute(add_minutes(tempAsr, parameters->adjustments->asr));
-        *(struct tm **) &prayer_times->maghrib = round_minute(
-                add_minutes(tempMaghrib, parameters->adjustments->maghrib + maghribOffsetInMinutes));
-        *(struct tm **) &prayer_times->isha = round_minute(add_minutes(tempIsha, parameters->adjustments->isha));
 
+        struct tm *final_fajr = (struct tm*)malloc(sizeof(struct tm));
+        *final_fajr = round_minute(add_minutes(tempFajr, parameters->adjustments->fajr));
+
+        struct tm *final_sunrise = (struct tm*)malloc(sizeof(struct tm));
+        *final_sunrise = round_minute(add_minutes(tempSunrise, parameters->adjustments->sunrise));
+
+        struct tm *final_dhuhr = (struct tm*)malloc(sizeof(struct tm));
+        *final_dhuhr = round_minute(add_minutes(tempDhuhr, parameters->adjustments->dhuhr + dhuhrOffsetInMinutes));
+
+        struct tm *final_asr= (struct tm*)malloc(sizeof(struct tm));
+        *final_asr = round_minute(add_minutes(tempAsr, parameters->adjustments->asr));
+
+        struct tm *final_maghrib = (struct tm*)malloc(sizeof(struct tm));
+        *final_maghrib = round_minute(add_minutes(tempMaghrib, parameters->adjustments->maghrib + maghribOffsetInMinutes));
+
+        struct tm *final_isha = (struct tm*)malloc(sizeof(struct tm));
+        *final_isha = round_minute(add_minutes(tempIsha, parameters->adjustments->isha));
+
+        prayer_times_t tmp_prayer_times = {final_fajr, final_sunrise, final_dhuhr, final_asr, final_maghrib, final_isha};
+        *prayer_times = tmp_prayer_times;
         return prayer_times;
     }
 }

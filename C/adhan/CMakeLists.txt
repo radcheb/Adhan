@@ -47,11 +47,14 @@ SET(ADAHN_SRC
 
 
 # Executable for bidviser
-ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} ${ADAHN_SRC})
-TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME}  m  )
+#ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} ${ADAHN_SRC})
+ADD_LIBRARY(${CMAKE_PROJECT_NAME} STATIC ${ADAHN_SRC})
+  #TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME}  m  )
 
 
-#set(TEST_ADHAN test/example.c)
+set(TEST_ADHAN test/example.c)
 
-#add_executable( test-adhan ${TEST_ADHAN})
-#target_link_libraries(test-adhan -lm )
+add_executable( test-adhan ${TEST_ADHAN})
+target_link_libraries(test-adhan
+                    ${CMAKE_PROJECT_NAME}
+                    m)

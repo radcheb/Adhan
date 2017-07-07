@@ -7,12 +7,14 @@
 #define C_COORDINATES_H
 
 typedef struct {
-    const double latitude;
-    const double longitude;
+    double latitude;
+    double longitude;
 } coordinates_t;
 
-inline coordinates_t *new_coordinates(double *latitude, double *longitude){
-    return (coordinates_t*)(latitude, longitude);
+static inline void new_coordinates(coordinates_t *cord, double latitude, double longitude){
+  cord->latitude = latitude;
+  cord->longitude = longitude;
+//    return (coordinates_t*)(latitude, longitude);
 }
 
 #endif //C_COORDINATES_H
