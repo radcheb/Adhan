@@ -13,6 +13,9 @@ IF("${CMAKE_BUILD_TYPE}" STREQUAL "DEBUG")
     SET(FORMAT_CODE style)
 ENDIF("${CMAKE_BUILD_TYPE}" STREQUAL "DEBUG")
 
+
+
+
 SET(CMAKE_C_FLAGS_RELEASE "-O2 -DNDEBUG")
 SET(CMAKE_CXX_FLAGS_RELEASE "-O2 -DNDEBUG")
 SET(CMAKE_C_FLAGS_DEBUG " -DDEBUG ")
@@ -30,31 +33,14 @@ ADD_DEFINITIONS("-Wall -ggdb3  -Wfatal-errors")
 ADD_DEFINITIONS("-fno-builtin-malloc -fno-builtin-realloc -fno-builtin-calloc -fno-builtin-free -fno-strict-aliasing -fno-omit-frame-pointer")
 ADD_DEFINITIONS("-fstrict-aliasing")
 
-INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
-INCLUDE_DIRECTORIES(include)
-
-
-SET(ADAHN_SRC
-        src/astronomical.c
-        src/solar_coordinates.c
-        src/solar_time.c
-        src/solar_coordinates.c
-        src/calculation_parameters.c
-        src/prayer_times.c
-        src/data_components.c
-        src/calendrical_helper.c
-  )
-
+#INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR})
+#INCLUDE_DIRECTORIES(include)
 
 # Executable for bidviser
 #ADD_EXECUTABLE(${CMAKE_PROJECT_NAME} ${ADAHN_SRC})
-ADD_LIBRARY(${CMAKE_PROJECT_NAME} STATIC ${ADAHN_SRC})
+#ADD_LIBRARY(${CMAKE_PROJECT_NAME} STATIC ${SOURCE_FILES})
   #TARGET_LINK_LIBRARIES(${CMAKE_PROJECT_NAME}  m  )
 
 
-set(TEST_ADHAN test/example.c)
-
-add_executable( test-adhan ${TEST_ADHAN})
-target_link_libraries(test-adhan
-                    ${CMAKE_PROJECT_NAME}
-                    m)
+add_subdirectory(src)
+add_subdirectory(test)

@@ -41,7 +41,7 @@ solar_coordinates_t *new_solar_coordinates(double julianDay){
 
 
     solar_coordinates_t* solar_coordinates = malloc(sizeof(solar_coordinates_t));
-    *solar_coordinates = (solar_coordinates_t){declination, apparentSiderealTime, rightAscension};
+    *solar_coordinates = (solar_coordinates_t){declination, rightAscension, apparentSiderealTime};
 
     return solar_coordinates;
 }

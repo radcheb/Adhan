@@ -131,7 +131,7 @@ double correctedTransit(double m0, double L, double theta0, double alpha2, doubl
     const double theta = unwind_angle(theta0 + (360.985647 * m0));
     const double alpha = unwind_angle(interpolateAngles(
             /* value */ alpha2, /* previousValue */ alpha1, /* nextValue */ alpha3, /* factor */ m0));
-    const double H = unwind_angle(theta - Lw - alpha);
+    const double H = closest_angle(theta - Lw - alpha);
     const double deltam = H / -360;
     return (m0 + deltam) * 24;
 }

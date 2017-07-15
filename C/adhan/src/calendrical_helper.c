@@ -26,7 +26,7 @@ double julianDay(int year, int month, int day) {
     return _julianDay(year, month, day, 0.0);
 }
 
-double julianDay2(struct tm* date) {
+double julianDay2(const struct tm* date) {
     return _julianDay(date->tm_year + 1900,
                      date->tm_mon + 1, date->tm_mday,
                      date->tm_hour + date->tm_min / 60.0);

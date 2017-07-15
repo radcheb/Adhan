@@ -34,7 +34,7 @@ static inline calculation_parameters_t * _INIT_CALCULATION_PARAMETERS(double faj
     calculation_parameters->ishaAngle = ishaAngle;
     calculation_parameters->ishaInterval = ishaInterval;
     *(calculation_parameters->madhab) = SHAFI;
-    *(calculation_parameters->highLatitudeRule) = MIDDLE_OF_THE_NIGHT;
+    *(calculation_parameters->highLatitudeRule) = TWILIGHT_ANGLE;
     calculation_parameters->adjustments = INIT_PRAYER_ADJUSTMENTS();
     return calculation_parameters;
 }
@@ -47,7 +47,7 @@ static inline calculation_parameters_t *INIT_CALCULATION_PARAMETERS() {
     calculation_parameters->ishaAngle = 0;
     calculation_parameters->ishaInterval = 0;
     *(calculation_parameters->madhab) = SHAFI;
-    *(calculation_parameters->highLatitudeRule) = MIDDLE_OF_THE_NIGHT;
+    *(calculation_parameters->highLatitudeRule) = TWILIGHT_ANGLE;
     calculation_parameters->adjustments = INIT_PRAYER_ADJUSTMENTS();
     return calculation_parameters;
 }

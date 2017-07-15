@@ -13,7 +13,7 @@ double _julianDay(int year, int month, int day, double hours);
 
 double julianDay(int year, int month, int day);
 
-double julianDay2(struct tm* date);
+double julianDay2(const struct tm* date);
 
 double julianCentury(double JD);
 #endif //C_CALENDRICAL_HELPER_H

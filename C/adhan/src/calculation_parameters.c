@@ -9,7 +9,7 @@ inline calculation_parameters_t *new_calculation_parameters(double fajrAngle, do
             sizeof(calculation_parameters_t));
     calculation_method  method = OTHER;
     madhab_t madhab = SHAFI;
-    high_latitude_rule_t highLatitudeRule = MIDDLE_OF_THE_NIGHT;
+    high_latitude_rule_t highLatitudeRule = TWILIGHT_ANGLE;
     *calculation_parameters = (calculation_parameters_t) {&method, fajrAngle, ishaAngle, 0, &madhab, &highLatitudeRule,
                                                           INIT_PRAYER_ADJUSTMENTS()};
     return calculation_parameters;
@@ -20,7 +20,7 @@ inline calculation_parameters_t *new_calculation_parameters2(double fajrAngle, i
             sizeof(calculation_parameters_t));
     calculation_method  method = OTHER;
     madhab_t madhab = SHAFI;
-    high_latitude_rule_t highLatitudeRule = MIDDLE_OF_THE_NIGHT;
+    high_latitude_rule_t highLatitudeRule = TWILIGHT_ANGLE;
     *calculation_parameters = (calculation_parameters_t) {&method, fajrAngle, 0, ishaInterval, &madhab, &highLatitudeRule,
                                                           INIT_PRAYER_ADJUSTMENTS()};
     return calculation_parameters;
@@ -31,7 +31,7 @@ new_calculation_parameters3(double fajrAngle, double ishaAngle, calculation_meth
     calculation_parameters_t *calculation_parameters = (calculation_parameters_t *) malloc(
             sizeof(calculation_parameters_t));
     madhab_t madhab = SHAFI;
-    high_latitude_rule_t highLatitudeRule = MIDDLE_OF_THE_NIGHT;
+    high_latitude_rule_t highLatitudeRule = TWILIGHT_ANGLE;
     *calculation_parameters = (calculation_parameters_t) {method, fajrAngle, ishaAngle, 0, &madhab, &highLatitudeRule,
                                                           INIT_PRAYER_ADJUSTMENTS()};
     return calculation_parameters;
@@ -42,7 +42,7 @@ new_calculation_parameters4(double fajrAngle, int ishaInterval, calculation_meth
     calculation_parameters_t *calculation_parameters = (calculation_parameters_t *) malloc(
             sizeof(calculation_parameters_t));
     madhab_t madhab = SHAFI;
-    high_latitude_rule_t highLatitudeRule = MIDDLE_OF_THE_NIGHT;
+    high_latitude_rule_t highLatitudeRule = TWILIGHT_ANGLE;
     *calculation_parameters = (calculation_parameters_t) {method, fajrAngle, 0, ishaInterval, &madhab, &highLatitudeRule,
                                                           INIT_PRAYER_ADJUSTMENTS()};
     return calculation_parameters;

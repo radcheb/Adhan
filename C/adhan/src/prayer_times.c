@@ -4,92 +4,102 @@
 
 
 #include "math.h"
-#include "../include/prayer_times.h"
-#include "../include/solar_time.h"
+#include "include/prayer_times.h"
+#include "include/solar_time.h"
 
 inline prayer_times_t *
 new_prayer_times(coordinates_t *coordinates, date_components_t *date, calculation_parameters_t *params) {
     return new_prayer_times2(coordinates, resolve_time(date), params);
 }
 
-prayer_times_t *new_prayer_times2(coordinates_t *coordinates, struct tm *date, calculation_parameters_t *parameters) {
-    struct tm *tempFajr = NULL;
-    struct tm *tempSunrise = NULL;
-    struct tm *tempDhuhr = NULL;
-    struct tm *tempAsr = NULL;
-    struct tm *tempMaghrib = NULL;
-    struct tm *tempIsha = NULL;
+prayer_times_t *new_prayer_times2(coordinates_t *coordinates, time_t date, calculation_parameters_t *parameters) {
+    time_t tempFajr = NULL;
+    time_t tempSunrise = NULL;
+    time_t tempDhuhr = NULL;
+    time_t tempAsr = NULL;
+    time_t tempMaghrib = NULL;
+    time_t tempIsha = NULL;
 
-    const int year = date->tm_year;
-    const int dayOfYear = date->tm_yday;
+    struct tm *tm_date = gmtime(&date);
+    const int year = tm_date->tm_year + 1900;
+    const int dayOfYear = tm_date->tm_yday + 1;
 
     solar_time_t *solar_time = new_solar_time(date, coordinates);
 
-    time_components_t *time_components1 = (time_components_t *) malloc(sizeof(time_components_t));
-    *time_components1 = (from_double(solar_time->transit));
-    struct tm *transit = time_components1 ? get_date_components(date) : NULL;
+    time_components_t *time_components1 = from_double(solar_time->transit);
+    time_t transit = time_components1 != NULL ? get_date_components(date, time_components1) : 0;
+    if(time_components1 != NULL){free(time_components1);}
 
-    *time_components1 = from_double(solar_time->sunrise);
-    struct tm *sunriseComponents = time_components1 ? get_date_components(date) : NULL;
+    time_components1 = from_double(solar_time->sunrise);
+    time_t sunriseComponents = time_components1 != NULL ? get_date_components(date, time_components1) : 0;
+    if(time_components1 != NULL){free(time_components1);}
 
-    *time_components1 = from_double(solar_time->sunset);
-    struct tm *sunsetComponents = time_components1 ? get_date_components(date) : NULL;
+    time_components1 = from_double(solar_time->sunset);
+    time_t sunsetComponents = time_components1 != NULL ? get_date_components(date, time_components1) : 0;
+    if(time_components1 != NULL){free(time_components1);}
 
-    bool error = !(transit && sunriseComponents && sunsetComponents);
+    bool error = (transit == 0 || sunriseComponents == 0 || sunsetComponents == 0);
 
     if (!error) {
         tempDhuhr = transit;
         tempSunrise = sunriseComponents;
         tempMaghrib = sunsetComponents;
 
-        *time_components1 = from_double(afternoon(solar_time, getShadowLength(*(parameters->madhab))));
-        if (time_components1) {
-            tempAsr = get_date_components(date);
+        time_components1 = from_double(afternoon(solar_time, getShadowLength(*(parameters->madhab))));
+        if (time_components1 != NULL) {
+            tempAsr = get_date_components(date, time_components1);
+            free(time_components1);
         }
 
         // get night length
-        struct tm *tomorrowSunrise = add_yday(sunriseComponents, 1);
-        long night = (long) mktime(tomorrowSunrise) - mktime(sunsetComponents);
+        time_t tomorrowSunrise = add_yday(sunriseComponents, 1);
+        long night = tomorrowSunrise * 1000 - sunsetComponents * 1000 ;
 
-        *time_components1 = from_double(hourAngle(solar_time, -parameters->fajrAngle, false));
-        if (time_components1) {
-            tempFajr = get_date_components(date);
+        time_components1 = from_double(
+                hourAngle(solar_time, -parameters->fajrAngle, false));
+        if (time_components1 != NULL) {
+            tempFajr = get_date_components(date, time_components1);
+            free(time_components1);
         }
 
         if (*(parameters->method) == MOON_SIGHTING_COMMITTEE && coordinates->latitude >= 55) {
-            tempFajr = add_seconds(sunriseComponents, -1 * (int) (night / 7000));
+            time_t tmp_time = add_seconds(sunriseComponents, -1 * (int) (night / 7000));
+            tempFajr = tmp_time;
         }
 
         const night_portions_t *nightPortions = get_night_portions(parameters);
 
-        struct tm *safeFajr;
+        time_t safeFajr;
         if (*(parameters->method) == MOON_SIGHTING_COMMITTEE) {
-            safeFajr = seasonAdjustedEveningTwilight(coordinates->latitude, dayOfYear, year, sunriseComponents);
+            safeFajr = seasonAdjustedMorningTwilight(coordinates->latitude, dayOfYear, year, sunriseComponents);
         } else {
             double portion = nightPortions->fajr;
             long nightFraction = (long) (portion * night / 1000);
             safeFajr = add_seconds(sunriseComponents, -1 * (int) nightFraction);
         }
 
-        if (!tempFajr || difftime(mktime(safeFajr), mktime(tempFajr)) > 0) {
+        if (!tempFajr || difftime(safeFajr, tempFajr) > 0) {
             tempFajr = safeFajr;
         }
 
         // Isha calculation with check against safe value
         if (parameters->ishaInterval > 0) {
-            tempIsha = add_seconds(tempMaghrib, parameters->ishaInterval * 60);
+            time_t tmp_time = add_seconds(tempMaghrib, parameters->ishaInterval * 60);
+            tempIsha = tmp_time;
         } else {
-            *time_components1 = from_double(hourAngle(solar_time, -parameters->ishaAngle, true));
-            if (time_components1) {
-                tempIsha = get_date_components(date);
+            time_components1 = from_double(hourAngle(solar_time, -parameters->ishaAngle, true));
+            if (time_components1 != NULL) {
+                tempIsha = get_date_components(date, time_components1);
+                free(time_components1);
             }
 
             if (*(parameters->method) == MOON_SIGHTING_COMMITTEE && coordinates->latitude >= 55) {
                 long nightFraction = night / 7000;
-                tempIsha = add_seconds(sunsetComponents, (int) nightFraction);
+                time_t tmp_time = add_seconds(sunsetComponents, (int) nightFraction);
+                tempIsha = tmp_time;
             }
 
-            struct tm *safeIsha;
+            time_t safeIsha;
             if (*(parameters->method) == MOON_SIGHTING_COMMITTEE) {
                 safeIsha = seasonAdjustedEveningTwilight(coordinates->latitude, dayOfYear, year, sunsetComponents);
             } else {
@@ -98,7 +108,7 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, struct tm *date, c
                 safeIsha = add_seconds(sunsetComponents, (int) nightFraction);
             }
 
-            if (!tempIsha || difftime(mktime(safeIsha), mktime(tempIsha)) < 0) {
+            if (!tempIsha || difftime(safeIsha, tempIsha) < 0) {
                 tempIsha = safeIsha;
             }
         }
@@ -135,25 +145,34 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, struct tm *date, c
     } else {
         prayer_times_t *prayer_times = (prayer_times_t *) malloc(sizeof(prayer_times_t));
 
-        struct tm *final_fajr = (struct tm*)malloc(sizeof(struct tm));
-        *final_fajr = round_minute(add_minutes(tempFajr, parameters->adjustments->fajr));
+        struct tm *final_fajr = (struct tm *) malloc(sizeof(struct tm));
+        time_t final_fajr_time = round_minute(add_minutes(tempFajr, parameters->adjustments->fajr));
+        *final_fajr = *(localtime(&final_fajr_time));
 
-        struct tm *final_sunrise = (struct tm*)malloc(sizeof(struct tm));
-        *final_sunrise = round_minute(add_minutes(tempSunrise, parameters->adjustments->sunrise));
+        struct tm *final_sunrise = (struct tm *) malloc(sizeof(struct tm));
+        time_t final_sunrise_time = round_minute(add_minutes(tempSunrise, parameters->adjustments->sunrise));
+        *final_sunrise = *(localtime(&final_sunrise_time));
 
-        struct tm *final_dhuhr = (struct tm*)malloc(sizeof(struct tm));
-        *final_dhuhr = round_minute(add_minutes(tempDhuhr, parameters->adjustments->dhuhr + dhuhrOffsetInMinutes));
+        struct tm *final_dhuhr = (struct tm *) malloc(sizeof(struct tm));
+        time_t final_dhuhr_time = round_minute(
+                add_minutes(tempDhuhr, parameters->adjustments->dhuhr + dhuhrOffsetInMinutes));
+        *final_dhuhr = *(localtime(&final_dhuhr_time));
 
-        struct tm *final_asr= (struct tm*)malloc(sizeof(struct tm));
-        *final_asr = round_minute(add_minutes(tempAsr, parameters->adjustments->asr));
+        struct tm *final_asr = (struct tm *) malloc(sizeof(struct tm));
+        time_t final_asr_time = round_minute(add_minutes(tempAsr, parameters->adjustments->asr));
+        *(final_asr) = *(localtime(&final_asr_time));
 
-        struct tm *final_maghrib = (struct tm*)malloc(sizeof(struct tm));
-        *final_maghrib = round_minute(add_minutes(tempMaghrib, parameters->adjustments->maghrib + maghribOffsetInMinutes));
+        struct tm *final_maghrib = (struct tm *) malloc(sizeof(struct tm));
+        time_t final_maghrib_time = round_minute(
+                add_minutes(tempMaghrib, parameters->adjustments->maghrib + maghribOffsetInMinutes));
+        *(final_maghrib) = *(localtime(&final_maghrib_time));
 
-        struct tm *final_isha = (struct tm*)malloc(sizeof(struct tm));
-        *final_isha = round_minute(add_minutes(tempIsha, parameters->adjustments->isha));
+        struct tm *final_isha = (struct tm *) malloc(sizeof(struct tm));
+        time_t final_isha_time = round_minute(add_minutes(tempIsha, parameters->adjustments->isha));
+        *(final_isha) = *(localtime(&final_isha_time));
 
-        prayer_times_t tmp_prayer_times = {final_fajr, final_sunrise, final_dhuhr, final_asr, final_maghrib, final_isha};
+        prayer_times_t tmp_prayer_times = {final_fajr, final_sunrise, final_dhuhr, final_asr, final_maghrib,
+                                           final_isha};
         *prayer_times = tmp_prayer_times;
         return prayer_times;
     }
@@ -161,23 +180,21 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, struct tm *date, c
 
 prayer_t *currentPrayer(prayer_times_t *prayer_times) {
     time_t now = time(0);
-    struct tm *today = gmtime(&now);
-    return currentPrayer2(prayer_times, today);
+    return currentPrayer2(prayer_times, now);
 }
 
-prayer_t *currentPrayer2(prayer_times_t *prayer_times, struct tm *time) {
-    long when = mktime(time);
-    if (mktime((struct tm*)prayer_times->isha) - when <= 0) {
+prayer_t *currentPrayer2(prayer_times_t *prayer_times, time_t when) {
+    if (mktime((struct tm *) prayer_times->isha) - when <= 0) {
         return init_prayer(ISHA);
-    } else if (mktime((struct tm*)prayer_times->maghrib) - when <= 0) {
+    } else if (mktime((struct tm *) prayer_times->maghrib) - when <= 0) {
         return init_prayer(MAGHRIB);
-    } else if (mktime((struct tm*)prayer_times->asr) - when <= 0) {
+    } else if (mktime((struct tm *) prayer_times->asr) - when <= 0) {
         return init_prayer(ASR);
-    } else if (mktime((struct tm*)prayer_times->dhuhr) - when <= 0) {
+    } else if (mktime((struct tm *) prayer_times->dhuhr) - when <= 0) {
         return init_prayer(DHUHR);
-    } else if (mktime((struct tm*)prayer_times->sunrise) - when <= 0) {
+    } else if (mktime((struct tm *) prayer_times->sunrise) - when <= 0) {
         return init_prayer(SUNRISE);
-    } else if (mktime((struct tm*)prayer_times->fajr) - when <= 0) {
+    } else if (mktime((struct tm *) prayer_times->fajr) - when <= 0) {
         return init_prayer(FAJR);
     } else {
         return init_prayer(NONE);
@@ -186,51 +203,49 @@ prayer_t *currentPrayer2(prayer_times_t *prayer_times, struct tm *time) {
 
 prayer_t *next_prayer(prayer_times_t *prayer_times) {
     time_t now = time(0);
-    struct tm *today = gmtime(&now);
-    return next_prayer2(prayer_times, today);
+    return next_prayer2(prayer_times, now);
 }
 
-prayer_t *next_prayer2(prayer_times_t *prayer_times, struct tm *time) {
-    long when = mktime(time);
-    if (mktime((struct tm*)prayer_times->isha) - when <= 0) {
+prayer_t *next_prayer2(prayer_times_t *prayer_times, time_t when) {
+    if (mktime((struct tm *) prayer_times->isha) - when <= 0) {
         return init_prayer(NONE);
-    } else if (mktime((struct tm*)prayer_times->maghrib) - when <= 0) {
+    } else if (mktime((struct tm *) prayer_times->maghrib) - when <= 0) {
         return init_prayer(ISHA);
-    } else if (mktime((struct tm*)prayer_times->asr) - when <= 0) {
+    } else if (mktime((struct tm *) prayer_times->asr) - when <= 0) {
         return init_prayer(MAGHRIB);
-    } else if (mktime((struct tm*)prayer_times->dhuhr) - when <= 0) {
+    } else if (mktime((struct tm *) prayer_times->dhuhr) - when <= 0) {
         return init_prayer(ASR);
-    } else if (mktime((struct tm*)prayer_times->sunrise) - when <= 0) {
+    } else if (mktime((struct tm *) prayer_times->sunrise) - when <= 0) {
         return init_prayer(DHUHR);
-    } else if (mktime((struct tm*)prayer_times->fajr) - when <= 0) {
+    } else if (mktime((struct tm *) prayer_times->fajr) - when <= 0) {
         return init_prayer(SUNRISE);
     } else {
         return init_prayer(FAJR);
     }
 }
 
-struct tm *timeForPrayer(prayer_times_t *prayer_times, prayer_t *prayer) {
+time_t timeForPrayer(prayer_times_t *prayer_times, prayer_t *prayer) {
     switch (*prayer) {
         case FAJR:
-            return (struct tm*)(prayer_times->fajr);
+            return mktime(prayer_times->fajr);
         case SUNRISE:
-            return (struct tm*)(prayer_times->sunrise);
+            return mktime(prayer_times->sunrise);
         case DHUHR:
-            return (struct tm*)(prayer_times->dhuhr);
+            return mktime(prayer_times->dhuhr);
         case ASR:
-            return (struct tm*)(prayer_times->asr);
+            return mktime(prayer_times->asr);
         case MAGHRIB:
-            return (struct tm*)(prayer_times->maghrib);
+            return mktime(prayer_times->maghrib);
         case ISHA:
-            return (struct tm*)(prayer_times->isha);
+            return mktime(prayer_times->isha);
         case NONE:
-            return NULL;
+            return 0;
         default:
-            return NULL;
+            return 0;
     }
 }
 
-struct tm *seasonAdjustedMorningTwilight(double latitude, int day, int year, struct tm *sunrise) {
+time_t seasonAdjustedMorningTwilight(double latitude, int day, int year, time_t sunrise) {
     const double a = 75 + ((28.65 / 55.0) * fabs(latitude));
     const double b = 75 + ((19.44 / 55.0) * fabs(latitude));
     const double c = 75 + ((32.74 / 55.0) * fabs(latitude));
@@ -255,7 +270,7 @@ struct tm *seasonAdjustedMorningTwilight(double latitude, int day, int year, str
     return add_seconds(sunrise, -(int) round(adjustment * 60.0));
 }
 
-struct tm *seasonAdjustedEveningTwilight(double latitude, int day, int year, struct tm *sunset) {
+time_t seasonAdjustedEveningTwilight(double latitude, int day, int year, time_t sunset) {
     const double a = 75 + ((25.60 / 55.0) * fabs(latitude));
     const double b = 75 + ((2.050 / 55.0) * fabs(latitude));
     const double c = 75 - ((9.210 / 55.0) * fabs(latitude));
