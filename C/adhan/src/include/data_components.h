@@ -23,12 +23,12 @@ typedef struct {
 // TimeComponents
 inline time_components_t *from_double(double value);
 
-static inline time_components_t new_time_components(int hours, int minutes, int seconds);
+inline time_components_t new_time_components(int hours, int minutes, int seconds);
 
 static inline time_t get_time_t(const time_components_t *time_components, const date_components_t *date_components);
 
 // DateComponents
-static inline date_components_t new_date_components(int day, int month, int year);
+inline date_components_t new_date_components(int day, int month, int year);
 
 inline date_components_t from_time_t(const time_t time);
 
@@ -51,4 +51,5 @@ time_t resolve_time_2(int year, int month, int day);
 
 time_t get_date_components(const time_t time, const time_components_t* time_components);
 
+time_t get_tm_date(time_components_t *time_components, date_components_t *date_components);
 #endif //C_DATA_COMPONENTS_H

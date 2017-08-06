@@ -2,9 +2,12 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 
 project(Adhan-Test)
 
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpermissive")
+
 set(REPO /home/stormcaster/workspace/Adhan/C/adhan/.repo)
 
-
+enable_language(CXX)
 include(CTest)
 enable_testing()
 
@@ -17,8 +20,24 @@ download_project(
         UPDATE_DISCONNECTED 1
 )
 
+download_project(
+        PROJ                googlemock
+        GIT_REPOSITORY      https://github.com/google/googletest.git
+        GIT_TAG             master
+        UPDATE_DISCONNECTED 1
+)
+
 add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR} EXCLUDE_FROM_ALL)
 
-set(test_SRCS Test.cpp)
+set(test_SRCS
+        Test.cpp
+        astronomical_test.cpp
+        double_utils_test.cpp)
+
 add_executable(runUnitTests ${test_SRCS})
-target_link_libraries(runUnitTests gtest gmock ${CMAKE_PROJECT_NAME} m)
+add_dependencies(runUnitTests adhan)
+target_link_libraries(runUnitTests
+        gtest
+        gmock
+        adhan
+        m)

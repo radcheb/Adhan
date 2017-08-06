@@ -13,12 +13,12 @@ new_prayer_times(coordinates_t *coordinates, date_components_t *date, calculatio
 }
 
 prayer_times_t *new_prayer_times2(coordinates_t *coordinates, time_t date, calculation_parameters_t *parameters) {
-    time_t tempFajr = NULL;
-    time_t tempSunrise = NULL;
-    time_t tempDhuhr = NULL;
-    time_t tempAsr = NULL;
-    time_t tempMaghrib = NULL;
-    time_t tempIsha = NULL;
+    time_t tempFajr = 0;
+    time_t tempSunrise = 0;
+    time_t tempDhuhr = 0;
+    time_t tempAsr = 0;
+    time_t tempMaghrib = 0;
+    time_t tempIsha = 0;
 
     struct tm *tm_date = gmtime(&date);
     const int year = tm_date->tm_year + 1900;
@@ -45,7 +45,7 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, time_t date, calcu
         tempSunrise = sunriseComponents;
         tempMaghrib = sunsetComponents;
 
-        time_components1 = from_double(afternoon(solar_time, getShadowLength(*(parameters->madhab))));
+        time_components1 = from_double(afternoon(solar_time, getShadowLength(parameters->madhab)));
         if (time_components1 != NULL) {
             tempAsr = get_date_components(date, time_components1);
             free(time_components1);

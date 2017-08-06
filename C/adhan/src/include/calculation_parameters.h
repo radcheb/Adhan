@@ -16,8 +16,8 @@ typedef struct {
     double fajrAngle;
     double ishaAngle;
     int ishaInterval;
-    madhab_t *madhab;
-    high_latitude_rule_t *highLatitudeRule;
+    madhab_t madhab;
+    high_latitude_rule_t highLatitudeRule;
     prayer_adjustments_t *adjustments;
 } calculation_parameters_t;
 
@@ -33,8 +33,8 @@ static inline calculation_parameters_t * _INIT_CALCULATION_PARAMETERS(double faj
     calculation_parameters->fajrAngle = fajrAngle;
     calculation_parameters->ishaAngle = ishaAngle;
     calculation_parameters->ishaInterval = ishaInterval;
-    *(calculation_parameters->madhab) = SHAFI;
-    *(calculation_parameters->highLatitudeRule) = TWILIGHT_ANGLE;
+    (calculation_parameters->madhab) = SHAFI;
+    (calculation_parameters->highLatitudeRule) = TWILIGHT_ANGLE;
     calculation_parameters->adjustments = INIT_PRAYER_ADJUSTMENTS();
     return calculation_parameters;
 }
@@ -46,13 +46,13 @@ static inline calculation_parameters_t *INIT_CALCULATION_PARAMETERS() {
     calculation_parameters->fajrAngle = 0;
     calculation_parameters->ishaAngle = 0;
     calculation_parameters->ishaInterval = 0;
-    *(calculation_parameters->madhab) = SHAFI;
-    *(calculation_parameters->highLatitudeRule) = TWILIGHT_ANGLE;
+    (calculation_parameters->madhab) = SHAFI;
+    (calculation_parameters->highLatitudeRule) = TWILIGHT_ANGLE;
     calculation_parameters->adjustments = INIT_PRAYER_ADJUSTMENTS();
     return calculation_parameters;
 }
 
-static inline calculation_parameters_t *new_calculation_parameters(double fajrAngle, double ishaAngle);
+calculation_parameters_t *new_calculation_parameters(double fajrAngle, double ishaAngle);
 
 static inline calculation_parameters_t *new_calculation_parameters2(double fajrAngle, int ishaInterval);
 

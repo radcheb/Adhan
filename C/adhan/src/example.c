@@ -1,20 +1,24 @@
 #include <stdio.h>
+#include <calculation_parameters.h>
+#include <data_components.h>
 #include "include/coordinates.h"
 #include "include/calculation_parameters.h"
 #include "include/prayer_times.h"
 
-void test_dates(){
+#define PARIS_COORDINATES {48.866667, 2.333333};
+
+void test_dates() {
 
     time_t now;
-    struct tm *lcltime = (struct tm *)malloc(sizeof(struct tm));
+    struct tm *lcltime = (struct tm *) malloc(sizeof(struct tm));
     now = time(NULL);
 
-    struct tm *tmp= gmtime(&now);
+    struct tm *tmp = gmtime(&now);
     *lcltime = *tmp;
 
     time_t yesterday_time = (now - 86400);
 
-    struct tm *yesterday_date = (struct tm *)malloc(sizeof(struct tm));
+    struct tm *yesterday_date = (struct tm *) malloc(sizeof(struct tm));
 
     tmp = gmtime(&yesterday_time);
     *yesterday_date = *tmp;
@@ -26,26 +30,30 @@ void test_dates(){
 
 }
 
-int main (int argc, char *argv[]){
+int main(int argc, char *argv[]) {
 
 //  test_dates();
-  coordinates_t coordinates;
-  new_coordinates(&coordinates, 48.866667, 2.333333 );
-  printf("Using coordinates: (lat:%f, long:%f)\n", coordinates.latitude, coordinates.longitude);
+    coordinates_t coordinates = PARIS_COORDINATES;
+    calculation_method method = OTHER;
+    high_latitude_rule_t highLatitudeRule = MIDDLE_OF_THE_NIGHT;
+    calculation_parameters_t *calculation_parameters = new_calculation_parameters(15.0, 13.0);
+//    const calculation_parameters_t *calculation_parameters = getParameters(&method);
+    calculation_parameters->highLatitudeRule = highLatitudeRule;
+    printf("Using calculation high lat: %s\n",
+           get_high_latitude_rule_name(calculation_parameters->highLatitudeRule));
 
-    time_t now = time(0);
-    date_components_t *dateComponents = (date_components_t *)malloc(sizeof(date_components_t));
-    *dateComponents= from_time_t(now);
-    printf("Using date: %d/%d/%d\n", dateComponents->day, dateComponents->month, dateComponents->year);
 
-    calculation_method method = MOON_SIGHTING_COMMITTEE;
-    const calculation_parameters_t * calculation_parameters = getParameters(&method);
+
+
+
+    printf("Using coordinates: (lat:%f, long:%f)\n", coordinates.latitude, coordinates.longitude);
     printf("Using calculation method: %s\n", get_calculation_method_name(*(calculation_parameters->method)));
-    printf("Using calculation angles: fajr:%d ishaa:%d - %f\n", (int) calculation_parameters->fajrAngle, calculation_parameters->ishaInterval,
+    printf("Using calculation angles: fajr:%d ishaa:%d - %f\n", (int) calculation_parameters->fajrAngle,
+           calculation_parameters->ishaInterval,
            calculation_parameters->ishaAngle);
-    printf("Using calculation asr: %s\n", get_madhab_name(*(calculation_parameters->madhab)));
-    *(calculation_parameters->highLatitudeRule) = TWILIGHT_ANGLE;
-    printf("Using calculation high lat: %s\n", get_high_latitude_rule_name(*(calculation_parameters->highLatitudeRule)));
+    printf("Using calculation asr: %s\n", get_madhab_name(calculation_parameters->madhab));
+    printf("Using calculation high lat: %s\n",
+           get_high_latitude_rule_name(calculation_parameters->highLatitudeRule));
 
     char buffer[80];
     printf("Calculating prayer times...\n");
@@ -61,24 +69,45 @@ int main (int argc, char *argv[]){
 //           dateComponents->year, result, expected);
 
 
-    prayer_times_t * prayer_times = new_prayer_times(&coordinates, dateComponents,
-                                                     (calculation_parameters_t *) calculation_parameters);
 
-    strftime(buffer,80,"%x - %I:%M%p", prayer_times->fajr);
-    printf("Fajr: %s\n", buffer);
+    time_t now = time(0);
+    time_t start_time = add_yday(now, - 30 - 16);
+    date_components_t *dateComponents = (date_components_t *) malloc(sizeof(date_components_t));
 
-    strftime(buffer,80,"%x - %I:%M%p", prayer_times->sunrise);
-    printf("Sunrise: %s\n", buffer);
+    *dateComponents = from_time_t(start_time);
+    printf("Starting from date: %d/%d/%d\n", dateComponents->day, dateComponents->month, dateComponents->year);
 
-    strftime(buffer,80,"%x - %I:%M%p", prayer_times->dhuhr);
-    printf("Dhuhr: %s\n", buffer);
+    printf(" Date \t\t Fajr \t\t Sunrise \t Dhuhr \t\t Asr \t\t Maghrib \t Ishaa\n");
 
-    strftime(buffer,80,"%x - %I:%M%p", prayer_times->asr);
-    printf("Asr: %s\n", buffer);
+    for(int i = 1; i < 31; i++){
 
-    strftime(buffer,80,"%x - %I:%M%p", prayer_times->maghrib);
-    printf("Maghrib: %s\n", buffer);
+        time_t ref_date = add_yday(start_time, i);
+        *dateComponents = from_time_t(ref_date);
 
-    strftime(buffer,80,"%x - %I:%M%p", prayer_times->isha);
-    printf("Isha: %s\n", buffer);
+        prayer_times_t *prayer_times = new_prayer_times(&coordinates, dateComponents,
+                                                        (calculation_parameters_t *) calculation_parameters);
+
+        strftime(buffer, 80, "%x", localtime(&ref_date));
+        printf(" %s\t", buffer);
+
+        strftime(buffer, 80, "%I:%M%p", prayer_times->fajr);
+        printf(" %s\t", buffer);
+
+        strftime(buffer, 80, "%I:%M%p", prayer_times->sunrise);
+        printf(" %s\t", buffer);
+
+        strftime(buffer, 80, "%I:%M%p", prayer_times->dhuhr);
+        printf(" %s\t", buffer);
+
+        strftime(buffer, 80, "%I:%M%p", prayer_times->asr);
+        printf(" %s\t", buffer);
+
+        strftime(buffer, 80, "%I:%M%p", prayer_times->maghrib);
+        printf(" %s\t", buffer);
+
+        strftime(buffer, 80, "%I:%M%p", prayer_times->isha);
+        printf(" %s\n", buffer);
+    }
+
+
 }

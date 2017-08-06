@@ -5,6 +5,7 @@
 #include <float.h>
 #include <math.h>
 #include <stdlib.h>
+#include <data_components.h>
 #include "include/data_components.h"
 
 inline time_components_t *from_double(double value) {
@@ -21,20 +22,25 @@ inline time_components_t *from_double(double value) {
     return time_components;
 }
 
-static inline time_components_t new_time_components(int hours, int minutes, int seconds){
+extern time_components_t new_time_components(int hours, int minutes, int seconds){
     time_components_t time_components=  {hours, minutes, seconds};
     return time_components;
 }
 
-time_t get_tm_date(const time_components_t *time_components, const date_components_t *date_components) {
+time_t get_tm_date(time_components_t *time_components, date_components_t *date_components) {
 
-    struct tm result = {time_components->seconds, time_components->minutes, time_components->hours,
-                        date_components->day, date_components->month - 1, date_components->year - 1900};
-    time_t time = mktime(&result);
+    struct tm tmp = {0};
+    tmp.tm_mday =date_components->day;
+    tmp.tm_mon = date_components->month - 1;
+    tmp.tm_year = date_components->year - 1900;
+    tmp.tm_hour =time_components->hours;
+    tmp.tm_min =time_components->minutes;
+    tmp.tm_sec =time_components->seconds;
+    time_t time = timegm(&tmp);
     return time;
 }
 
-inline date_components_t new_date_components(int day, int month, int year){
+extern date_components_t new_date_components(int day, int month, int year){
     date_components_t date_components =  {day, month, year};
     return date_components;
 }
