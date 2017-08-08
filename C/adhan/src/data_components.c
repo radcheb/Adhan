@@ -5,7 +5,6 @@
 #include <float.h>
 #include <math.h>
 #include <stdlib.h>
-#include <data_components.h>
 #include "include/data_components.h"
 
 inline time_components_t *from_double(double value) {
