@@ -21,21 +21,21 @@ typedef struct {
 } date_components_t;
 
 // TimeComponents
-inline time_components_t *from_double(double value);
+time_components_t *from_double(double value);
 
-inline time_components_t new_time_components(int hours, int minutes, int seconds);
+time_components_t new_time_components(int hours, int minutes, int seconds);
 
-static inline time_t get_time_t(const time_components_t *time_components, const date_components_t *date_components);
+time_t get_time_t(const time_components_t *time_components, const date_components_t *date_components);
 
 // DateComponents
-inline date_components_t new_date_components(int day, int month, int year);
+date_components_t new_date_components(int day, int month, int year);
 
-inline date_components_t from_time_t(const time_t time);
+date_components_t from_time_t(const time_t time);
 
 // CalendarUtil
 bool is_leap_year(int year);
 
-inline time_t round_minute(time_t time);
+time_t round_minute(time_t time);
 
 time_t add_seconds(const time_t when, int amount);
 
