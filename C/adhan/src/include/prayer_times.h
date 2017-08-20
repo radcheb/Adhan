@@ -25,15 +25,15 @@ prayer_times_t* new_prayer_times(coordinates_t* coordinates, date_components_t* 
 
 prayer_times_t* new_prayer_times2(coordinates_t* coordinates, time_t date, calculation_parameters_t* parameters);
 
-prayer_t* currentPrayer(prayer_times_t* prayer_times);
+prayer_t currentPrayer(prayer_times_t* prayer_times);
 
-prayer_t* currentPrayer2(prayer_times_t* prayer_times, time_t when);
+prayer_t currentPrayer2(prayer_times_t* prayer_times, time_t when);
 
-prayer_t* next_prayer(prayer_times_t* prayer_times);
+prayer_t next_prayer(prayer_times_t* prayer_times);
 
-prayer_t* next_prayer2(prayer_times_t* prayer_times, time_t when);
+prayer_t next_prayer2(prayer_times_t* prayer_times, time_t when);
 
-time_t timeForPrayer(prayer_times_t* prayer_times, prayer_t* prayer);
+time_t timeForPrayer(prayer_times_t* prayer_times, prayer_t prayer);
 
 time_t seasonAdjustedMorningTwilight(double latitude, int day, int year, time_t sunrise);
 

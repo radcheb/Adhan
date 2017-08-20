@@ -7,18 +7,13 @@
 #define C_PRAYER_H
 
 typedef enum {
-    NONE,
-    FAJR,
-    SUNRISE,
-    DHUHR,
-    ASR,
-    MAGHRIB,
-    ISHA
+    NONE = 0,
+    FAJR = 1,
+    SUNRISE = 2,
+    DHUHR = 3,
+    ASR = 4,
+    MAGHRIB = 5,
+    ISHA = 6
 } prayer_t;
 
-static inline prayer_t* init_prayer(prayer_t prayer){
-    prayer_t * rs = (prayer_t*)malloc(sizeof(prayer_t));
-    *rs = prayer;
-    return rs;
-}
 #endif //C_PRAYER_H

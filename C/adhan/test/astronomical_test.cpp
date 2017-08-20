@@ -111,7 +111,7 @@ TEST(AstronomicalTest, testRightAscensionEdgeCase) {
         time_t date = add_yday(resolve_time_2(2016, 1, 1), i);
         solar_time_t *time = new_solar_time(date, &coordinates);
         if (i > 0) {
-            // transit from one day to another should not differ more than one minute
+            // transit from one day to another shoul0d not differ more than one minute
             EXPECT_LT(abs(time->transit - previousTime->transit), (1.0 / 60.0));
 
             // sunrise and sunset from one day to another should not differ more than two minutes
@@ -246,7 +246,6 @@ TEST(AstronomicalTest, testJulianDay) {
     date_components_t dateComponent = new_date_components(/* day */ 12, /* month */ 7, /* year */ 2015);
     time_components_t time_component = new_time_components(/* hour */ 4, /* minute */ 15, 0);
     time_t when = get_tm_date(&time_component, &dateComponent);
-    printf("when : %lu\n", when);
     ASSERT_NEAR(julianDay2(gmtime(&when)),jdVal, 0.000001);
 
     ASSERT_NEAR(_julianDay(/* year */ 2015, /* month */ 7, /* day */ 12, /* hours */ 8.0),2457215.833333, 0.000001);
