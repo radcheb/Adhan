@@ -5,7 +5,7 @@ project(Adhan-Test)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpermissive")
 
-set(REPO /home/stormcaster/workspace/Adhan/C/adhan/.repo)
+set(REPO ${PROJECT_SOURCE_DIR}/../.repo)
 
 enable_language(CXX)
 include(CTest)
