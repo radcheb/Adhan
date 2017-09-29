@@ -12,7 +12,7 @@ int getDaysSinceSolstice(int year, int month, int day, double latitude) {
     // For Southern Hemisphere start from June 21
     // (DYY=0 for June 21, and counting forward)
     time_t date = resolve_time_2(year, month, day);
-    int dayOfYear = gmtime(&date)->tm_yday + 1;
+    int dayOfYear = localtime(&date)->tm_yday + 1;
     return daysSinceSolstice(dayOfYear, year, latitude);
 }
 
