@@ -32,7 +32,10 @@ add_subdirectory(${googletest_SOURCE_DIR} ${googletest_BINARY_DIR} EXCLUDE_FROM_
 set(test_SRCS
         Test.cpp
         astronomical_test.cpp
-        double_utils_test.cpp)
+        double_utils_test.cpp
+        calculation_method_test.cpp
+        calculation_parameters_test.cpp
+        prayer_times_test.cpp)
 
 add_executable(runUnitTests ${test_SRCS})
 add_dependencies(runUnitTests adhan)

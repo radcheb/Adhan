@@ -27,7 +27,7 @@ SET(MINOR 0)
 SET(PATCH 1)
 SET(VERSION ${MAJOR}.${MINOR}.${PATCH})
 
-ADD_DEFINITIONS("-fgnu89-inline")
+#ADD_DEFINITIONS("-fgnu89-inline")
 
 ADD_DEFINITIONS("-Wall -ggdb3  -Wfatal-errors")
 ADD_DEFINITIONS("-fno-builtin-malloc -fno-builtin-realloc -fno-builtin-calloc -fno-builtin-free -fno-strict-aliasing -fno-omit-frame-pointer")
