@@ -35,7 +35,7 @@ time_t get_tm_date(time_components_t *time_components, date_components_t *date_c
     tmp.tm_hour =time_components->hours;
     tmp.tm_min =time_components->minutes;
     tmp.tm_sec =time_components->seconds;
-    time_t time = timegm(&tmp);
+    time_t time = mktime(&tmp);
     return time;
 }
 
@@ -45,7 +45,7 @@ extern date_components_t new_date_components(int day, int month, int year){
 }
 
 inline date_components_t from_time_t(const time_t time) {
-    struct tm * date = gmtime(&time);
+    struct tm * date = localtime(&time);
     date_components_t date_components = {date->tm_mday, date->tm_mon + 1, date->tm_year + 1900};
     return date_components;
 }
@@ -93,15 +93,15 @@ time_t resolve_time_2(int year, int month, int day) {
     tmp.tm_year =year - 1900;
     tmp.tm_mon =month - 1;
     tmp.tm_mday =day;
-    time_t tmp_time = timegm(&tmp);
+    time_t tmp_time = mktime(&tmp);
     return tmp_time;
 }
 
 time_t get_date_components(const time_t time, const time_components_t* time_components){
-    struct tm * tm_date = gmtime(&time);
+    struct tm * tm_date = localtime(&time);
     tm_date->tm_hour = 0;
     tm_date->tm_sec = time_components->seconds;
     tm_date->tm_min = time_components->minutes;
     tm_date->tm_hour = time_components->hours;
-    return timegm(tm_date);
+    return mktime(tm_date);
 }

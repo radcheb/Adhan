@@ -20,7 +20,7 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, time_t date, calcu
     time_t tempMaghrib = 0;
     time_t tempIsha = 0;
 
-    struct tm *tm_date = gmtime(&date);
+    struct tm *tm_date = localtime(&date);
     const int year = tm_date->tm_year + 1900;
     const int dayOfYear = tm_date->tm_yday + 1;
 

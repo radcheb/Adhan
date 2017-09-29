@@ -15,22 +15,27 @@ solar_time_t *new_solar_time(const time_t today_time, coordinates_t *coordinates
     struct tm*tmp_date;
 
     struct tm*today = (struct tm*)malloc(sizeof(struct tm));
-    tmp_date = gmtime(&today_time);
+    tmp_date = localtime(&today_time);
     *today = *tmp_date;
 
-    time_t tomorrow_time = add_yday(today_time, 1);
+    const time_t tomorrow_time = add_yday(today_time, 1);
     struct tm*tomorrow = (struct tm*)malloc(sizeof(struct tm));
-    tmp_date = gmtime(&tomorrow_time);
+    tmp_date = localtime(&tomorrow_time);
     *tomorrow = *tmp_date;
 
     const time_t yesterday_time = add_yday(today_time, -1);
     struct tm*yesterday = (struct tm*)malloc(sizeof(struct tm));
-    tmp_date = gmtime(&yesterday_time);
+    tmp_date = localtime(&yesterday_time);
     *yesterday = *tmp_date;
 
-    solar_coordinates_t *prevSolar = new_solar_coordinates(julianDay2(yesterday));
     solar_coordinates_t *solar = new_solar_coordinates(julianDay2(today));
+//    solar_coordinates_t *solar = new_solar_coordinates(julianDay2(localtime(&today_time)));
+
+    solar_coordinates_t *prevSolar = new_solar_coordinates(julianDay2(yesterday));
+//    solar_coordinates_t *prevSolar = new_solar_coordinates(julianDay2(localtime(&yesterday_time)));
+
     solar_coordinates_t *nextSolar = new_solar_coordinates(julianDay2(tomorrow));
+//    solar_coordinates_t *nextSolar = new_solar_coordinates(julianDay2(localtime(&tomorrow_time)));
 
     double approximateTransit = getApproximateTransit(coordinates->longitude, solar->apparentSiderealTime,
                                                       solar->rightAscension);
@@ -59,6 +64,9 @@ solar_time_t *new_solar_time(const time_t today_time, coordinates_t *coordinates
     *(solar_coordinates_t **) &result->nextSolar = nextSolar;
     *(double *) &result->approximateTransit = approximateTransit;
 
+    free(solar);
+    free(prevSolar);
+    free(nextSolar);
     return result;
 }
 
