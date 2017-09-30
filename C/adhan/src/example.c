@@ -7,29 +7,6 @@
 
 #define PARIS_COORDINATES {48.866667, 2.333333};
 
-void test_dates() {
-
-    time_t now;
-    struct tm *lcltime = (struct tm *) malloc(sizeof(struct tm));
-    now = time(NULL);
-
-    struct tm *tmp = gmtime(&now);
-    *lcltime = *tmp;
-
-    time_t yesterday_time = (now - 86400);
-
-    struct tm *yesterday_date = (struct tm *) malloc(sizeof(struct tm));
-
-    tmp = gmtime(&yesterday_time);
-    *yesterday_date = *tmp;
-
-    printf("The time is %d:%d\n", lcltime->tm_hour, lcltime->tm_min);
-
-    printf("\ntoday: %s\n", asctime(lcltime));
-    printf("\nyesterday: %s\n", asctime(yesterday_date));
-
-}
-
 int main(int argc, char *argv[]) {
 
 //  test_dates();
@@ -72,40 +49,39 @@ int main(int argc, char *argv[]) {
 
     time_t now = time(0);
     time_t start_time = add_yday(now, - 30 - 16);
-    date_components_t *dateComponents = (date_components_t *) malloc(sizeof(date_components_t));
 
-    *dateComponents = from_time_t(start_time);
-    printf("Starting from date: %d/%d/%d\n", dateComponents->day, dateComponents->month, dateComponents->year);
+    date_components_t dateComponents = from_time_t(start_time);
+    printf("Starting from date: %d/%d/%d\n", dateComponents.day, dateComponents.month, dateComponents.year);
 
     printf(" Date \t\t Fajr \t\t Sunrise \t Dhuhr \t\t Asr \t\t Maghrib \t Ishaa\n");
 
     for(int i = 1; i < 31; i++){
 
         time_t ref_date = add_yday(start_time, i);
-        *dateComponents = from_time_t(ref_date);
+        dateComponents = from_time_t(ref_date);
 
-        prayer_times_t *prayer_times = new_prayer_times(&coordinates, dateComponents,
+        prayer_times_t *prayer_times = new_prayer_times(&coordinates, &dateComponents,
                                                         (calculation_parameters_t *) calculation_parameters);
 
         strftime(buffer, 80, "%x", localtime(&ref_date));
         printf(" %s\t", buffer);
 
-        strftime(buffer, 80, "%I:%M%p", prayer_times->fajr);
+        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times->fajr));
         printf(" %s\t", buffer);
 
-        strftime(buffer, 80, "%I:%M%p", prayer_times->sunrise);
+        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times->sunrise));
         printf(" %s\t", buffer);
 
-        strftime(buffer, 80, "%I:%M%p", prayer_times->dhuhr);
+        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times->dhuhr));
         printf(" %s\t", buffer);
 
-        strftime(buffer, 80, "%I:%M%p", prayer_times->asr);
+        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times->asr));
         printf(" %s\t", buffer);
 
-        strftime(buffer, 80, "%I:%M%p", prayer_times->maghrib);
+        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times->maghrib));
         printf(" %s\t", buffer);
 
-        strftime(buffer, 80, "%I:%M%p", prayer_times->isha);
+        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times->isha));
         printf(" %s\n", buffer);
     }
 
