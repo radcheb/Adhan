@@ -13,24 +13,24 @@ int main(int argc, char *argv[]) {
     coordinates_t coordinates = PARIS_COORDINATES;
     calculation_method method = OTHER;
     high_latitude_rule_t highLatitudeRule = MIDDLE_OF_THE_NIGHT;
-    calculation_parameters_t *calculation_parameters = new_calculation_parameters(15.0, 13.0);
+    calculation_parameters_t calculation_parameters = new_calculation_parameters(15.0, 13.0);
 //    const calculation_parameters_t *calculation_parameters = getParameters(&method);
-    calculation_parameters->highLatitudeRule = highLatitudeRule;
+    calculation_parameters.highLatitudeRule = highLatitudeRule;
     printf("Using calculation high lat: %s\n",
-           get_high_latitude_rule_name(calculation_parameters->highLatitudeRule));
+           get_high_latitude_rule_name(calculation_parameters.highLatitudeRule));
 
 
 
 
 
     printf("Using coordinates: (lat:%f, long:%f)\n", coordinates.latitude, coordinates.longitude);
-    printf("Using calculation method: %s\n", get_calculation_method_name(*(calculation_parameters->method)));
-    printf("Using calculation angles: fajr:%d ishaa:%d - %f\n", (int) calculation_parameters->fajrAngle,
-           calculation_parameters->ishaInterval,
-           calculation_parameters->ishaAngle);
-    printf("Using calculation asr: %s\n", get_madhab_name(calculation_parameters->madhab));
+    printf("Using calculation method: %s\n", get_calculation_method_name(calculation_parameters.method));
+    printf("Using calculation angles: fajr:%d ishaa:%d - %f\n", (int) calculation_parameters.fajrAngle,
+           calculation_parameters.ishaInterval,
+           calculation_parameters.ishaAngle);
+    printf("Using calculation asr: %s\n", get_madhab_name(calculation_parameters.madhab));
     printf("Using calculation high lat: %s\n",
-           get_high_latitude_rule_name(calculation_parameters->highLatitudeRule));
+           get_high_latitude_rule_name(calculation_parameters.highLatitudeRule));
 
     char buffer[80];
     printf("Calculating prayer times...\n");
@@ -60,8 +60,7 @@ int main(int argc, char *argv[]) {
         time_t ref_date = add_yday(start_time, i);
         dateComponents = from_time_t(ref_date);
 
-        prayer_times_t *prayer_times = new_prayer_times(&coordinates, &dateComponents,
-                                                        (calculation_parameters_t *) calculation_parameters);
+        prayer_times_t *prayer_times = new_prayer_times(&coordinates, &dateComponents, &calculation_parameters);
 
         strftime(buffer, 80, "%x", localtime(&ref_date));
         printf(" %s\t", buffer);

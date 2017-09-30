@@ -4,58 +4,48 @@
 
 #include "include/calculation_parameters.h"
 
-calculation_parameters_t *new_calculation_parameters(double fajrAngle, double ishaAngle) {
-    calculation_parameters_t *calculation_parameters = (calculation_parameters_t *) malloc(
-            sizeof(calculation_parameters_t));
+calculation_parameters_t new_calculation_parameters(double fajrAngle, double ishaAngle) {
     calculation_method  method = OTHER;
     madhab_t madhab = SHAFI;
     high_latitude_rule_t highLatitudeRule = TWILIGHT_ANGLE;
-    *calculation_parameters = (calculation_parameters_t) {&method, fajrAngle, ishaAngle, 0, madhab, highLatitudeRule,
+    calculation_parameters_t calculation_parameters = (calculation_parameters_t) {method, fajrAngle, ishaAngle, 0, madhab, highLatitudeRule,
                                                           INIT_PRAYER_ADJUSTMENTS()};
     return calculation_parameters;
 }
 
-inline calculation_parameters_t *new_calculation_parameters2(double fajrAngle, int ishaInterval) {
-    calculation_parameters_t *calculation_parameters = (calculation_parameters_t *) malloc(
-            sizeof(calculation_parameters_t));
+inline calculation_parameters_t new_calculation_parameters2(double fajrAngle, int ishaInterval) {
     calculation_method  method = OTHER;
     madhab_t madhab = SHAFI;
     high_latitude_rule_t highLatitudeRule = TWILIGHT_ANGLE;
-    *calculation_parameters = (calculation_parameters_t) {&method, fajrAngle, 0, ishaInterval, madhab, highLatitudeRule,
+    calculation_parameters_t calculation_parameters = (calculation_parameters_t) {method, fajrAngle, 0, ishaInterval, madhab, highLatitudeRule,
                                                           INIT_PRAYER_ADJUSTMENTS()};
     return calculation_parameters;
 }
 
-inline calculation_parameters_t *
-new_calculation_parameters3(double fajrAngle, double ishaAngle, calculation_method *method) {
-    calculation_parameters_t *calculation_parameters = (calculation_parameters_t *) malloc(
-            sizeof(calculation_parameters_t));
+inline calculation_parameters_t
+new_calculation_parameters3(double fajrAngle, double ishaAngle, calculation_method method) {
     madhab_t madhab = SHAFI;
     high_latitude_rule_t highLatitudeRule = TWILIGHT_ANGLE;
-    *calculation_parameters = (calculation_parameters_t) {method, fajrAngle, ishaAngle, 0, madhab, highLatitudeRule,
+    calculation_parameters_t calculation_parameters = (calculation_parameters_t) {method, fajrAngle, ishaAngle, 0, madhab, highLatitudeRule,
                                                           INIT_PRAYER_ADJUSTMENTS()};
     return calculation_parameters;
 }
 
-inline calculation_parameters_t *
-new_calculation_parameters4(double fajrAngle, int ishaInterval, calculation_method *method) {
-    calculation_parameters_t *calculation_parameters = (calculation_parameters_t *) malloc(
-            sizeof(calculation_parameters_t));
+inline calculation_parameters_t
+new_calculation_parameters4(double fajrAngle, int ishaInterval, calculation_method method) {
     madhab_t madhab = SHAFI;
     high_latitude_rule_t highLatitudeRule = TWILIGHT_ANGLE;
-    *calculation_parameters = (calculation_parameters_t) {method, fajrAngle, 0, ishaInterval, madhab, highLatitudeRule,
+    calculation_parameters_t calculation_parameters = (calculation_parameters_t) {method, fajrAngle, 0, ishaInterval, madhab, highLatitudeRule,
                                                           INIT_PRAYER_ADJUSTMENTS()};
     return calculation_parameters;
 }
 
-night_portions_t* new_night_portions(double fajr, double isha){
-    night_portions_t* night_portions = (night_portions_t*) malloc(sizeof(night_portions));
-    *(double *)&night_portions->fajr= fajr;
-    *(double *)&night_portions->isha= isha;
+night_portions_t new_night_portions(double fajr, double isha){
+    night_portions_t night_portions = (night_portions_t){fajr, isha};
     return night_portions;
 }
 
-night_portions_t *get_night_portions(calculation_parameters_t *calculation_parameters) {
+night_portions_t get_night_portions(calculation_parameters_t *calculation_parameters) {
     switch(calculation_parameters->highLatitudeRule){
         case MIDDLE_OF_THE_NIGHT:
             return new_night_portions(1.0 / 2.0, 1.0 / 2.0);
@@ -68,9 +58,9 @@ night_portions_t *get_night_portions(calculation_parameters_t *calculation_param
     }
 }
 
-calculation_parameters_t* getParameters(calculation_method*calculation_method1){
+calculation_parameters_t getParameters(calculation_method calculation_method1){
     calculation_method default_method = OTHER;
-    switch(*calculation_method1){
+    switch(calculation_method1){
         case MUSLIM_WORLD_LEAGUE:
             return new_calculation_parameters3(18.0, 17.0, calculation_method1);
         case EGYPTIAN:
@@ -92,6 +82,6 @@ calculation_parameters_t* getParameters(calculation_method*calculation_method1){
         case OTHER:
             return new_calculation_parameters3(0, 0, calculation_method1);
         default:
-            return new_calculation_parameters3(0, 0, &default_method);
+            return new_calculation_parameters3(0, 0, default_method);
     }
 }

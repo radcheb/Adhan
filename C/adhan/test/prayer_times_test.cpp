@@ -43,11 +43,11 @@ void getLocalStrTime(time_t timestamp, char buffer[]) {
 TEST(PrayerTimesTest, testPrayerTimes) {
     date_components_t date = new_date_components(12, 7, 2015);
     calculation_method method = NORTH_AMERICA;
-    calculation_parameters_t *params = getParameters(&method);
-    params->madhab = HANAFI;
+    calculation_parameters_t params = getParameters(method);
+    params.madhab = HANAFI;
 
     coordinates_t coordinates = {35.7750, -78.6336};
-    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, params);
+    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, &params);
 
     char destString[9];
 
@@ -77,10 +77,10 @@ TEST(PrayerTimesTest, testPrayerTimes) {
 TEST(PrayerTimesTest, testOffsets) {
     date_components_t date = new_date_components(1, 12, 2015);
     calculation_method method = MUSLIM_WORLD_LEAGUE;
-    calculation_parameters_t *params = getParameters(&method);
+    calculation_parameters_t params = getParameters(method);
 
     coordinates_t coordinates = {35.7750, -78.6336};
-    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, params);
+    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, &params);
 
     char destString[9];
 
@@ -107,8 +107,8 @@ TEST(PrayerTimesTest, testOffsets) {
     putenv((char *) "TZ=UTC");
     free(prayerTimes);
 
-    params->adjustments = {10, 10, 10, 10, 10, 10};
-    prayerTimes = new_prayer_times(&coordinates, &date, params);
+    params.adjustments = {10, 10, 10, 10, 10, 10};
+    prayerTimes = new_prayer_times(&coordinates, &date, &params);
 
     putenv((char *) "TZ=America/New_York");
 
@@ -133,9 +133,9 @@ TEST(PrayerTimesTest, testOffsets) {
     putenv((char *) "TZ=UTC");
     free(prayerTimes);
 
-    params->adjustments = INIT_PRAYER_ADJUSTMENTS();
+    params.adjustments = INIT_PRAYER_ADJUSTMENTS();
 
-    prayerTimes = new_prayer_times(&coordinates, &date, params);
+    prayerTimes = new_prayer_times(&coordinates, &date, &params);
 
     putenv((char *) "TZ=America/New_York");
 
@@ -164,10 +164,10 @@ TEST(PrayerTimesTest, testOffsets) {
 TEST(PrayerTimesTest, testMoonsightingMethod) {
     date_components_t date = new_date_components(31, 1, 2016);
     calculation_method method = MOON_SIGHTING_COMMITTEE;
-    calculation_parameters_t *params = getParameters(&method);
+    calculation_parameters_t params = getParameters(method);
 
     coordinates_t coordinates = {35.7750, -78.6336};
-    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, params);
+    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, &params);
 
     char destString[9];
 
@@ -197,11 +197,11 @@ TEST(PrayerTimesTest, testMoonsightingMethod) {
 TEST(PrayerTimesTest, testMoonsightingMethodHighLat) {
     date_components_t date = new_date_components(1, 1, 2016);
     calculation_method method = MOON_SIGHTING_COMMITTEE;
-    calculation_parameters_t *params = getParameters(&method);
-    params->madhab = HANAFI;
+    calculation_parameters_t params = getParameters(method);
+    params.madhab = HANAFI;
 
     coordinates_t coordinates = {59.9094, 10.7349};
-    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, params);
+    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, &params);
 
     char destString[9];
 
@@ -230,12 +230,12 @@ TEST(PrayerTimesTest, testMoonsightingMethodHighLat) {
 TEST(PrayerTimesTest, testTimeForPrayer) {
     date_components_t date = new_date_components(1, 7, 2016);
     calculation_method method = MUSLIM_WORLD_LEAGUE;
-    calculation_parameters_t *params = getParameters(&method);
-    params->madhab = HANAFI;
-    params->highLatitudeRule = TWILIGHT_ANGLE;
+    calculation_parameters_t params = getParameters(method);
+    params.madhab = HANAFI;
+    params.highLatitudeRule = TWILIGHT_ANGLE;
 
     coordinates_t coordinates = {59.9094, 10.7349};
-    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, params);
+    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, &params);
 
     putenv((char *) "TZ=Europe/Oslo");
 
@@ -251,12 +251,12 @@ TEST(PrayerTimesTest, testTimeForPrayer) {
 TEST(PrayerTimesTest, testCurrentPrayer) {
     date_components_t date = new_date_components(1, 9, 2015);
     calculation_method method = KARACHI;
-    calculation_parameters_t *params = getParameters(&method);
-    params->madhab = HANAFI;
-    params->highLatitudeRule = TWILIGHT_ANGLE;
+    calculation_parameters_t params = getParameters(method);
+    params.madhab = HANAFI;
+    params.highLatitudeRule = TWILIGHT_ANGLE;
 
     coordinates_t coordinates = {33.720817, 73.090032};
-    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, params);
+    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, &params);
 
     ASSERT_NE(prayerTimes, NULL);
     ASSERT_EQ(currentPrayer2(prayerTimes, add_seconds(prayerTimes->fajr, -1)), NONE);
@@ -272,12 +272,12 @@ TEST(PrayerTimesTest, testCurrentPrayer) {
 TEST(PrayerTimesTest, testNextPrayer) {
     date_components_t date = new_date_components(1, 9, 2015);
     calculation_method method = KARACHI;
-    calculation_parameters_t *params = getParameters(&method);
-    params->madhab = HANAFI;
-    params->highLatitudeRule = TWILIGHT_ANGLE;
+    calculation_parameters_t params = getParameters(method);
+    params.madhab = HANAFI;
+    params.highLatitudeRule = TWILIGHT_ANGLE;
 
     coordinates_t coordinates = {33.720817, 73.090032};
-    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, params);
+    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, &params);
 
     ASSERT_NE(prayerTimes, NULL);
     ASSERT_EQ(next_prayer2(prayerTimes, add_seconds(prayerTimes->fajr, -1)), FAJR);

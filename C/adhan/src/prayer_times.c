@@ -3,6 +3,7 @@
  */
 
 
+#include <calculation_parameters.h>
 #include "math.h"
 #include "include/prayer_times.h"
 #include "include/solar_time.h"
@@ -58,18 +59,18 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, time_t date, calcu
             tempFajr = get_date_components(date, &time_components);
         }
 
-        if (*(parameters->method) == MOON_SIGHTING_COMMITTEE && coordinates->latitude >= 55) {
+        if (parameters->method == MOON_SIGHTING_COMMITTEE && coordinates->latitude >= 55) {
             time_t tmp_time = add_seconds(sunriseComponents, -1 * (int) (night / 7000));
             tempFajr = tmp_time;
         }
 
-        const night_portions_t *nightPortions = get_night_portions(parameters);
+        const night_portions_t nightPortions = get_night_portions(parameters);
 
         time_t safeFajr;
-        if (*(parameters->method) == MOON_SIGHTING_COMMITTEE) {
+        if (parameters->method == MOON_SIGHTING_COMMITTEE) {
             safeFajr = seasonAdjustedMorningTwilight(coordinates->latitude, dayOfYear, year, sunriseComponents);
         } else {
-            double portion = nightPortions->fajr;
+            double portion = nightPortions.fajr;
             long nightFraction = (long) (portion * night / 1000);
             safeFajr = add_seconds(sunriseComponents, -1 * (int) nightFraction);
         }
@@ -88,17 +89,17 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, time_t date, calcu
                 tempIsha = get_date_components(date, &time_components);
             }
 
-            if (*(parameters->method) == MOON_SIGHTING_COMMITTEE && coordinates->latitude >= 55) {
+            if (parameters->method == MOON_SIGHTING_COMMITTEE && coordinates->latitude >= 55) {
                 long nightFraction = night / 7000;
                 time_t tmp_time = add_seconds(sunsetComponents, (int) nightFraction);
                 tempIsha = tmp_time;
             }
 
             time_t safeIsha;
-            if (*(parameters->method) == MOON_SIGHTING_COMMITTEE) {
+            if (parameters->method == MOON_SIGHTING_COMMITTEE) {
                 safeIsha = seasonAdjustedEveningTwilight(coordinates->latitude, dayOfYear, year, sunsetComponents);
             } else {
-                double portion = nightPortions->isha;
+                double portion = nightPortions.isha;
                 long nightFraction = (long) (portion * night / 1000);
                 safeIsha = add_seconds(sunsetComponents, (int) nightFraction);
             }
@@ -111,13 +112,13 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, time_t date, calcu
 
     // method based offsets
     int dhuhrOffsetInMinutes;
-    if (*(parameters->method) == MOON_SIGHTING_COMMITTEE) {
+    if (parameters->method == MOON_SIGHTING_COMMITTEE) {
         // Moonsighting Committee requires 5 minutes for the sun to pass
         // the zenith and dhuhr to enter
         dhuhrOffsetInMinutes = 5;
-    } else if (*(parameters->method) == UMM_AL_QURA ||
-               *(parameters->method) == GULF ||
-               *(parameters->method) == QATAR) {
+    } else if (parameters->method == UMM_AL_QURA ||
+               parameters->method == GULF ||
+               parameters->method == QATAR) {
         // UmmAlQura and derivatives don't add
         // anything to zenith for dhuhr
         dhuhrOffsetInMinutes = 0;
@@ -126,7 +127,7 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, time_t date, calcu
     }
 
     int maghribOffsetInMinutes;
-    if (*(parameters->method) == MOON_SIGHTING_COMMITTEE) {
+    if (parameters->method == MOON_SIGHTING_COMMITTEE) {
         // Moonsighting Committee adds 3 minutes to sunset time to account for light refraction
         maghribOffsetInMinutes = 3;
     } else {
