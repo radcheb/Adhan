@@ -240,6 +240,7 @@ TEST(PrayerTimesTest, testTimeForPrayer) {
 
     putenv((char *) "TZ=Europe/Oslo");
 
+    ASSERT_NE(prayerTimes, NULL);
     ASSERT_EQ(prayerTimes->fajr, timeForPrayer(prayerTimes, FAJR));
     ASSERT_EQ(prayerTimes->sunrise, timeForPrayer(prayerTimes, SUNRISE));
     ASSERT_EQ(prayerTimes->dhuhr, timeForPrayer(prayerTimes, DHUHR));
@@ -258,6 +259,7 @@ TEST(PrayerTimesTest, testCurrentPrayer) {
     coordinates_t coordinates = {33.720817, 73.090032};
     prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, params);
 
+    ASSERT_NE(prayerTimes, NULL);
     ASSERT_EQ(currentPrayer2(prayerTimes, add_seconds(prayerTimes->fajr, -1)), NONE);
     ASSERT_EQ(currentPrayer2(prayerTimes, prayerTimes->fajr), FAJR);
     ASSERT_EQ(currentPrayer2(prayerTimes, add_seconds(prayerTimes->fajr, 1)), FAJR);
@@ -278,6 +280,7 @@ TEST(PrayerTimesTest, testNextPrayer) {
     coordinates_t coordinates = {33.720817, 73.090032};
     prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, params);
 
+    ASSERT_NE(prayerTimes, NULL);
     ASSERT_EQ(next_prayer2(prayerTimes, add_seconds(prayerTimes->fajr, -1)), FAJR);
     ASSERT_EQ(next_prayer2(prayerTimes, prayerTimes->fajr), SUNRISE);
     ASSERT_EQ(next_prayer2(prayerTimes, add_seconds(prayerTimes->fajr, 1)), SUNRISE);

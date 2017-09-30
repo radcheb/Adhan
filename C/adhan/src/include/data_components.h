@@ -14,6 +14,8 @@ typedef struct {
     int seconds;
 } time_components_t;
 
+#define INVALID_TIME {-1, -1, -1};
+
 typedef struct {
     int day;
     int month;
@@ -21,7 +23,9 @@ typedef struct {
 } date_components_t;
 
 // TimeComponents
-time_components_t *from_double(double value);
+bool is_valid_time(time_components_t time_components);
+
+time_components_t from_double(double value);
 
 time_components_t new_time_components(int hours, int minutes, int seconds);
 

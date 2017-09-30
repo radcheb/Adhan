@@ -26,17 +26,15 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, time_t date, calcu
 
     solar_time_t *solar_time = new_solar_time(date, coordinates);
 
-    time_components_t *time_components1 = from_double(solar_time->transit);
-    time_t transit = time_components1 != NULL ? get_date_components(date, time_components1) : 0;
-    if(time_components1 != NULL){free(time_components1);}
+    time_components_t time_components;
+    time_components = from_double(solar_time->transit);
+    time_t transit = is_valid_time(time_components) ? get_date_components(date, &time_components) : 0;
 
-    time_components1 = from_double(solar_time->sunrise);
-    time_t sunriseComponents = time_components1 != NULL ? get_date_components(date, time_components1) : 0;
-    if(time_components1 != NULL){free(time_components1);}
+    time_components = from_double(solar_time->sunrise);
+    time_t sunriseComponents = is_valid_time(time_components) ? get_date_components(date, &time_components) : 0;
 
-    time_components1 = from_double(solar_time->sunset);
-    time_t sunsetComponents = time_components1 != NULL ? get_date_components(date, time_components1) : 0;
-    if(time_components1 != NULL){free(time_components1);}
+    time_components = from_double(solar_time->sunset);
+    time_t sunsetComponents = is_valid_time(time_components) ? get_date_components(date, &time_components) : 0;
 
     bool error = (transit == 0 || sunriseComponents == 0 || sunsetComponents == 0);
 
@@ -45,21 +43,19 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, time_t date, calcu
         tempSunrise = sunriseComponents;
         tempMaghrib = sunsetComponents;
 
-        time_components1 = from_double(afternoon(solar_time, getShadowLength(parameters->madhab)));
-        if (time_components1 != NULL) {
-            tempAsr = get_date_components(date, time_components1);
-            free(time_components1);
+        time_components = from_double(afternoon(solar_time, getShadowLength(parameters->madhab)));
+        if (is_valid_time(time_components)) {
+            tempAsr = get_date_components(date, &time_components);
         }
 
         // get night length
         time_t tomorrowSunrise = add_yday(sunriseComponents, 1);
         long night = tomorrowSunrise * 1000 - sunsetComponents * 1000 ;
 
-        time_components1 = from_double(
+        time_components = from_double(
                 hourAngle(solar_time, -parameters->fajrAngle, false));
-        if (time_components1 != NULL) {
-            tempFajr = get_date_components(date, time_components1);
-            free(time_components1);
+        if (is_valid_time(time_components)) {
+            tempFajr = get_date_components(date, &time_components);
         }
 
         if (*(parameters->method) == MOON_SIGHTING_COMMITTEE && coordinates->latitude >= 55) {
@@ -87,10 +83,9 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, time_t date, calcu
             time_t tmp_time = add_seconds(tempMaghrib, parameters->ishaInterval * 60);
             tempIsha = tmp_time;
         } else {
-            time_components1 = from_double(hourAngle(solar_time, -parameters->ishaAngle, true));
-            if (time_components1 != NULL) {
-                tempIsha = get_date_components(date, time_components1);
-                free(time_components1);
+            time_components = from_double(hourAngle(solar_time, -parameters->ishaAngle, true));
+            if (is_valid_time(time_components)) {
+                tempIsha = get_date_components(date, &time_components);
             }
 
             if (*(parameters->method) == MOON_SIGHTING_COMMITTEE && coordinates->latitude >= 55) {
