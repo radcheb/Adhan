@@ -10,7 +10,7 @@
 #include "math.h"
 #include "include/double_utils.h"
 
-solar_coordinates_t *new_solar_coordinates(double julianDay){
+solar_coordinates_t new_solar_coordinates(double julianDay){
 
     double T = julianCentury(julianDay);
     double L0 = meanSolarLongitude(/* julianCentury */ T);
@@ -40,8 +40,7 @@ solar_coordinates_t *new_solar_coordinates(double julianDay){
     double apparentSiderealTime = theta0 + (((delta_psi * 3600) * cos(to_radius(epsilon0 + delta_epsilon))) / 3600);
 
 
-    solar_coordinates_t* solar_coordinates = malloc(sizeof(solar_coordinates_t));
-    *solar_coordinates = (solar_coordinates_t){declination, rightAscension, apparentSiderealTime};
+    solar_coordinates_t solar_coordinates = (solar_coordinates_t) {declination, rightAscension, apparentSiderealTime};
 
     return solar_coordinates;
 }

@@ -12,6 +12,6 @@ typedef struct {
     double apparentSiderealTime;
 } solar_coordinates_t;
 
-solar_coordinates_t *new_solar_coordinates(double julianDay);
+solar_coordinates_t new_solar_coordinates(double julianDay);
 
 #endif //C_SOLAR_COORDINATES_H

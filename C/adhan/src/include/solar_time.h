@@ -19,9 +19,9 @@ typedef struct {
     const double sunrise;
     const double sunset;
     const coordinates_t *observer;
-    const solar_coordinates_t *solar;
-    const solar_coordinates_t *prevSolar;
-    const solar_coordinates_t *nextSolar;
+    solar_coordinates_t solar;
+    solar_coordinates_t prevSolar;
+    solar_coordinates_t nextSolar;
     double approximateTransit;
 } solar_time_t;
 

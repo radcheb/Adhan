@@ -35,7 +35,7 @@ TEST(AstronomicalTest, testAngleConversion) {
 TEST(AstronomicalTest, testSolarCoordinates) {
     // values from Astronomical Algorithms page 165
     double jd = julianDay(/* year */ 1992, /* month */ 10, /* day */ 13);
-    solar_coordinates_t *solar = new_solar_coordinates(/* julianDay */ jd);
+    solar_coordinates_t solar = new_solar_coordinates(/* julianDay */ jd);
 
     double T = julianCentury(/* julianDay */ jd);
     double L0 = meanSolarLongitude(/* julianCentury */ T);
@@ -47,8 +47,8 @@ TEST(AstronomicalTest, testSolarCoordinates) {
             /* julianCentury */ T, /* meanAnomaly */ M);
     double lambda = apparentSolarLongitude(
             /* julianCentury */ T, /* meanLongitude */ L0);
-    double sigma = solar->declination;
-    double alpha = unwind_angle(solar->rightAscension);
+    double sigma = solar.declination;
+    double alpha = unwind_angle(solar.rightAscension);
 
     EXPECT_NEAR(T, -0.072183436, 0.00000000001);
 
@@ -76,7 +76,7 @@ TEST(AstronomicalTest, testSolarCoordinates) {
     T = julianCentury(/* julianDay */ jd);
 
     double theta0 = meanSiderealTime(/* julianCentury */ T);
-    double thetaApp = solar->apparentSiderealTime;
+    double thetaApp = solar.apparentSiderealTime;
     double Omega = ascendingLunarNodeLongitude(/* julianCentury */ T);
     epsilon0 = meanObliquityOfTheEcliptic(/* julianCentury */ T);
     L0 = meanSolarLongitude(/* julianCentury */ T);
