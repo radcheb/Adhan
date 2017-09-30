@@ -76,6 +76,8 @@ TEST(PrayerTimesTest, testPrayerTimes) {
 
     getLocalStrTime(isha_timestamp, destString);
     ASSERT_STREQ(destString, "09:57 PM");
+
+    putenv((char *) "TZ=UTC");
 }
 
 TEST(PrayerTimesTest, testOffsets) {
@@ -114,6 +116,8 @@ TEST(PrayerTimesTest, testOffsets) {
 
     getLocalStrTime(isha_timestamp, destString);
     ASSERT_STREQ(destString, "06:26 PM");
+
+    putenv((char *) "TZ=UTC");
 
 }
 
@@ -154,6 +158,7 @@ TEST(PrayerTimesTest, testMoonsightingMethod) {
     getLocalStrTime(isha_timestamp, destString);
     ASSERT_STREQ(destString, "07:05 PM");
 
+    putenv((char *) "TZ=UTC");
 }
 
 TEST(PrayerTimesTest, testMoonsightingMethodHighLat) {
