@@ -18,7 +18,7 @@ typedef struct {
     int ishaInterval;
     madhab_t madhab;
     high_latitude_rule_t highLatitudeRule;
-    prayer_adjustments_t *adjustments;
+    prayer_adjustments_t adjustments;
 } calculation_parameters_t;
 
 typedef struct {

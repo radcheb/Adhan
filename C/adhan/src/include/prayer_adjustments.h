@@ -35,15 +35,9 @@ typedef struct {
     int isha;
 } prayer_adjustments_t;
 
-static inline prayer_adjustments_t * INIT_PRAYER_ADJUSTMENTS(){
-    prayer_adjustments_t  *prayer_adjustments = (prayer_adjustments_t *)malloc(sizeof(prayer_adjustments_t));
-    prayer_adjustments->fajr = 0;
-    prayer_adjustments->sunrise = 0;
-    prayer_adjustments->dhuhr = 0;
-    prayer_adjustments->asr = 0;
-    prayer_adjustments->maghrib = 0;
-    prayer_adjustments->isha = 0;
-   return prayer_adjustments;
+static inline prayer_adjustments_t INIT_PRAYER_ADJUSTMENTS(){
+    prayer_adjustments_t  prayer_adjustments = (prayer_adjustments_t){0, 0, 0, 0, 0, 0};
+    return prayer_adjustments;
 }
 
 #endif //C_PRAYER_ADJUSTMENTS_H

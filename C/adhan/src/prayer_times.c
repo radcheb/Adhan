@@ -140,14 +140,14 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, time_t date, calcu
     } else {
         prayer_times_t *prayer_times = (prayer_times_t *) malloc(sizeof(prayer_times_t));
 
-        time_t final_fajr_time = round_minute(add_minutes(tempFajr, parameters->adjustments->fajr));
-        time_t final_sunrise_time = round_minute(add_minutes(tempSunrise, parameters->adjustments->sunrise));
+        time_t final_fajr_time = round_minute(add_minutes(tempFajr, parameters->adjustments.fajr));
+        time_t final_sunrise_time = round_minute(add_minutes(tempSunrise, parameters->adjustments.sunrise));
         time_t final_dhuhr_time = round_minute(
-                add_minutes(tempDhuhr, parameters->adjustments->dhuhr + dhuhrOffsetInMinutes));
-        time_t final_asr_time = round_minute(add_minutes(tempAsr, parameters->adjustments->asr));
+                add_minutes(tempDhuhr, parameters->adjustments.dhuhr + dhuhrOffsetInMinutes));
+        time_t final_asr_time = round_minute(add_minutes(tempAsr, parameters->adjustments.asr));
         time_t final_maghrib_time = round_minute(
-                add_minutes(tempMaghrib, parameters->adjustments->maghrib + maghribOffsetInMinutes));
-        time_t final_isha_time = round_minute(add_minutes(tempIsha, parameters->adjustments->isha));
+                add_minutes(tempMaghrib, parameters->adjustments.maghrib + maghribOffsetInMinutes));
+        time_t final_isha_time = round_minute(add_minutes(tempIsha, parameters->adjustments.isha));
 
         prayer_times_t tmp_prayer_times = {final_fajr_time, final_sunrise_time, final_dhuhr_time, final_asr_time,
                                            final_maghrib_time, final_isha_time};

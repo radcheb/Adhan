@@ -107,8 +107,7 @@ TEST(PrayerTimesTest, testOffsets) {
     putenv((char *) "TZ=UTC");
     free(prayerTimes);
 
-    prayer_adjustments_t adjustments = {10, 10, 10, 10, 10, 10};
-    params->adjustments = &adjustments;
+    params->adjustments = {10, 10, 10, 10, 10, 10};
     prayerTimes = new_prayer_times(&coordinates, &date, params);
 
     putenv((char *) "TZ=America/New_York");
