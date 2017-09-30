@@ -105,20 +105,21 @@ TEST(AstronomicalTest, testSolarCoordinates) {
 }
 
 TEST(AstronomicalTest, testRightAscensionEdgeCase) {
-    solar_time_t *previousTime = NULL;
     coordinates_t coordinates = {35 + 47.0 / 60.0, -78 - 39.0 / 60.0};
     for (int i = 0; i < 365; i++) {
+        time_t previous_date = add_yday(resolve_time_2(2016, 1, 1), i - 1);
         time_t date = add_yday(resolve_time_2(2016, 1, 1), i);
-        solar_time_t *time = new_solar_time(date, &coordinates);
+        solar_time_t time = new_solar_time(date, &coordinates);
+        solar_time_t previousTime = new_solar_time(previous_date, &coordinates);
         if (i > 0) {
             // transit from one day to another shoul0d not differ more than one minute
-            EXPECT_LT(abs(time->transit - previousTime->transit), (1.0 / 60.0));
+            EXPECT_LT(abs(time.transit - previousTime.transit), (1.0 / 60.0));
 
             // sunrise and sunset from one day to another should not differ more than two minutes
-            EXPECT_LT(abs(time->sunrise - previousTime->sunrise), (2.0 / 60.0));
-            EXPECT_LT(abs(time->sunset - previousTime->sunset), (2.0 / 60.0));
+            EXPECT_LT(abs(time.sunrise - previousTime.sunrise), (2.0 / 60.0));
+            EXPECT_LT(abs(time.sunset - previousTime.sunset), (2.0 / 60.0));
+
         }
-        previousTime = time;
     }
 
 }
@@ -172,14 +173,14 @@ TEST(AstronomicalTest, testSolarTime) {
      */
 
     coordinates_t coordinates = {35 + 47.0/60.0, -78 - 39.0/60.0};
-    solar_time_t *solar = new_solar_time(resolve_time_2(2015, 7, 12), &coordinates);
+    solar_time_t solar = new_solar_time(resolve_time_2(2015, 7, 12), &coordinates);
 
-    double transit = solar->transit;
-    double sunrise = solar->sunrise;
-    double sunset = solar->sunset;
-    double twilightStart = hourAngle(solar ,-6, /* afterTransit */ false);
-    double twilightEnd = hourAngle(solar ,-6, /* afterTransit */ true);
-    double invalid = hourAngle(solar ,-36, /* afterTransit */ true);
+    double transit = solar.transit;
+    double sunrise = solar.sunrise;
+    double sunset = solar.sunset;
+    double twilightStart = hourAngle(&solar ,-6, /* afterTransit */ false);
+    double twilightEnd = hourAngle(&solar ,-6, /* afterTransit */ true);
+    double invalid = hourAngle(&solar ,-36, /* afterTransit */ true);
     EXPECT_THAT(twilightStart, equalsTime(9, 38));
     EXPECT_THAT(sunrise, equalsTime(10, 8));
     EXPECT_THAT(transit, equalsTime(17, 20));
@@ -191,11 +192,11 @@ TEST(AstronomicalTest, testSolarTime) {
 TEST(AstronomicalTest, testCalendricalDate) {
     // generated from http://aa.usno.navy.mil/data/docs/RS_OneYear.php for KUKUIHAELE, HAWAII
     coordinates_t coordinates = {/* latitude */ 20 + 7.0/60.0, /* longitude */ -155.0 - 34.0/60.0};
-    solar_time_t* day1solar = new_solar_time(resolve_time_2(2015, 4, /* day */ 2), &coordinates);
-    solar_time_t* day2solar = new_solar_time(resolve_time_2(2015, 4, 3), &coordinates);
+    solar_time_t day1solar = new_solar_time(resolve_time_2(2015, 4, /* day */ 2), &coordinates);
+    solar_time_t day2solar = new_solar_time(resolve_time_2(2015, 4, 3), &coordinates);
 
-    double day1 = day1solar->sunrise;
-    double day2 = day2solar->sunrise;
+    double day1 = day1solar.sunrise;
+    double day2 = day2solar.sunrise;
 
     EXPECT_THAT(day1, equalsTime(16, 15));
     EXPECT_THAT(day2, equalsTime(16, 14));

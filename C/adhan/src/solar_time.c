@@ -9,7 +9,7 @@
 #include "math.h"
 #include "include/solar_time.h"
 
-solar_time_t *new_solar_time(const time_t today_time, coordinates_t *coordinates) {
+solar_time_t new_solar_time(const time_t today_time, coordinates_t *coordinates) {
 
 
     const time_t tomorrow_time = add_yday(today_time, 1);
@@ -36,15 +36,8 @@ solar_time_t *new_solar_time(const time_t today_time, coordinates_t *coordinates
                                        prevSolar->rightAscension, nextSolar->rightAscension, solar->declination,
                                        prevSolar->declination, nextSolar->declination);
 
-    solar_time_t *result = malloc(sizeof(solar_time_t));
-    *(double *) &result->transit = transit;
-    *(double *) &result->sunrise = sunrise;
-    *(double *) &result->sunset = sunset;
-    *(coordinates_t **) &result->observer = observer;
-    *(solar_coordinates_t **) &result->solar = solar;
-    *(solar_coordinates_t **) &result->prevSolar = prevSolar;
-    *(solar_coordinates_t **) &result->nextSolar = nextSolar;
-    *(double *) &result->approximateTransit = approximateTransit;
+    solar_time_t result = (solar_time_t) {transit, sunrise, sunset, observer, solar, prevSolar, nextSolar,
+                                          approximateTransit};
 
     return result;
 }
