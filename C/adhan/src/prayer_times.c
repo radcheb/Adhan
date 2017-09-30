@@ -145,34 +145,17 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, time_t date, calcu
     } else {
         prayer_times_t *prayer_times = (prayer_times_t *) malloc(sizeof(prayer_times_t));
 
-        struct tm *final_fajr = (struct tm *) malloc(sizeof(struct tm));
         time_t final_fajr_time = round_minute(add_minutes(tempFajr, parameters->adjustments->fajr));
-        *final_fajr = *(localtime(&final_fajr_time));
-
-        struct tm *final_sunrise = (struct tm *) malloc(sizeof(struct tm));
         time_t final_sunrise_time = round_minute(add_minutes(tempSunrise, parameters->adjustments->sunrise));
-        *final_sunrise = *(localtime(&final_sunrise_time));
-
-        struct tm *final_dhuhr = (struct tm *) malloc(sizeof(struct tm));
         time_t final_dhuhr_time = round_minute(
                 add_minutes(tempDhuhr, parameters->adjustments->dhuhr + dhuhrOffsetInMinutes));
-        *final_dhuhr = *(localtime(&final_dhuhr_time));
-
-        struct tm *final_asr = (struct tm *) malloc(sizeof(struct tm));
         time_t final_asr_time = round_minute(add_minutes(tempAsr, parameters->adjustments->asr));
-        *(final_asr) = *(localtime(&final_asr_time));
-
-        struct tm *final_maghrib = (struct tm *) malloc(sizeof(struct tm));
         time_t final_maghrib_time = round_minute(
                 add_minutes(tempMaghrib, parameters->adjustments->maghrib + maghribOffsetInMinutes));
-        *(final_maghrib) = *(localtime(&final_maghrib_time));
-
-        struct tm *final_isha = (struct tm *) malloc(sizeof(struct tm));
         time_t final_isha_time = round_minute(add_minutes(tempIsha, parameters->adjustments->isha));
-        *(final_isha) = *(localtime(&final_isha_time));
 
-        prayer_times_t tmp_prayer_times = {final_fajr, final_sunrise, final_dhuhr, final_asr, final_maghrib,
-                                           final_isha};
+        prayer_times_t tmp_prayer_times = {final_fajr_time, final_sunrise_time, final_dhuhr_time, final_asr_time,
+                                           final_maghrib_time, final_isha_time};
         *prayer_times = tmp_prayer_times;
         return prayer_times;
     }
@@ -184,17 +167,17 @@ prayer_t currentPrayer(prayer_times_t *prayer_times) {
 }
 
 prayer_t currentPrayer2(prayer_times_t *prayer_times, time_t when) {
-    if (mktime((struct tm *) prayer_times->isha) - when <= 0) {
+    if (prayer_times->isha - when <= 0) {
         return ISHA;
-    } else if (mktime((struct tm *) prayer_times->maghrib) - when <= 0) {
+    } else if (prayer_times->maghrib - when <= 0) {
         return MAGHRIB;
-    } else if (mktime((struct tm *) prayer_times->asr) - when <= 0) {
+    } else if (prayer_times->asr - when <= 0) {
         return ASR;
-    } else if (mktime((struct tm *) prayer_times->dhuhr) - when <= 0) {
+    } else if (prayer_times->dhuhr - when <= 0) {
         return DHUHR;
-    } else if (mktime((struct tm *) prayer_times->sunrise) - when <= 0) {
+    } else if (prayer_times->sunrise - when <= 0) {
         return SUNRISE;
-    } else if (mktime((struct tm *) prayer_times->fajr) - when <= 0) {
+    } else if (prayer_times->fajr - when <= 0) {
         return FAJR;
     } else {
         return NONE;
@@ -207,17 +190,17 @@ prayer_t next_prayer(prayer_times_t *prayer_times) {
 }
 
 prayer_t next_prayer2(prayer_times_t *prayer_times, time_t when) {
-    if (mktime((struct tm *) prayer_times->isha) - when <= 0) {
+    if (prayer_times->isha - when <= 0) {
         return NONE;
-    } else if (mktime((struct tm *) prayer_times->maghrib) - when <= 0) {
+    } else if (prayer_times->maghrib - when <= 0) {
         return ISHA;
-    } else if (mktime((struct tm *) prayer_times->asr) - when <= 0) {
+    } else if (prayer_times->asr - when <= 0) {
         return MAGHRIB;
-    } else if (mktime((struct tm *) prayer_times->dhuhr) - when <= 0) {
+    } else if (prayer_times->dhuhr - when <= 0) {
         return ASR;
-    } else if (mktime((struct tm *) prayer_times->sunrise) - when <= 0) {
+    } else if (prayer_times->sunrise - when <= 0) {
         return DHUHR;
-    } else if (mktime((struct tm *) prayer_times->fajr) - when <= 0) {
+    } else if (prayer_times->fajr - when <= 0) {
         return SUNRISE;
     } else {
         return FAJR;
@@ -227,17 +210,17 @@ prayer_t next_prayer2(prayer_times_t *prayer_times, time_t when) {
 time_t timeForPrayer(prayer_times_t *prayer_times, prayer_t prayer) {
     switch (prayer) {
         case FAJR:
-            return mktime(prayer_times->fajr);
+            return prayer_times->fajr;
         case SUNRISE:
-            return mktime(prayer_times->sunrise);
+            return prayer_times->sunrise;
         case DHUHR:
-            return mktime(prayer_times->dhuhr);
+            return prayer_times->dhuhr;
         case ASR:
-            return mktime(prayer_times->asr);
+            return prayer_times->asr;
         case MAGHRIB:
-            return mktime(prayer_times->maghrib);
+            return prayer_times->maghrib;
         case ISHA:
-            return mktime(prayer_times->isha);
+            return prayer_times->isha;
         case NONE:
             return 0;
         default:

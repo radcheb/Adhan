@@ -13,12 +13,12 @@
 #define C_PRAYER_TIMES_H
 
 typedef struct {
-    struct tm *fajr;
-    struct tm *sunrise;
-    struct tm *dhuhr;
-    struct tm *asr;
-    struct tm *maghrib;
-    struct tm *isha;
+    time_t fajr;
+    time_t sunrise;
+    time_t dhuhr;
+    time_t asr;
+    time_t maghrib;
+    time_t isha;
 } prayer_times_t;
 
 prayer_times_t* new_prayer_times(coordinates_t* coordinates, date_components_t* date, calculation_parameters_t* params);
