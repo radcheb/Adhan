@@ -9,6 +9,8 @@
 #include <stdbool.h>
 #include "coordinates.h"
 
+# define PI		3.14159265358979323846	/* pi */
+
 double to_radius(double deg);
 
 double to_degrees(double radians);

@@ -25,11 +25,11 @@ MATCHER_P2(equalsTime, expectedHours, expectedMinutes,
 }
 
 TEST(AstronomicalTest, testAngleConversion) {
-    EXPECT_NEAR(to_degrees(M_PI), 180.0, 0.00001);
-    EXPECT_NEAR(to_degrees(M_PI / 2), 90.0, 0.00001);
+    EXPECT_NEAR(to_degrees(PI), 180.0, 0.00001);
+    EXPECT_NEAR(to_degrees(PI / 2), 90.0, 0.00001);
 
-    EXPECT_NEAR(to_radius(180.0), M_PI, 0.00001);
-    EXPECT_NEAR(to_radius(90.0), M_PI / 2, 0.00001);
+    EXPECT_NEAR(to_radius(180.0), PI, 0.00001);
+    EXPECT_NEAR(to_radius(90.0), PI / 2, 0.00001);
 }
 
 TEST(AstronomicalTest, testSolarCoordinates) {
