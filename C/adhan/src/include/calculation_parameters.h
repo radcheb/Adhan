@@ -42,13 +42,11 @@ static inline calculation_parameters_t INIT_CALCULATION_PARAMETERS() {
 
 calculation_parameters_t new_calculation_parameters(double fajrAngle, double ishaAngle);
 
-static inline calculation_parameters_t new_calculation_parameters2(double fajrAngle, int ishaInterval);
+calculation_parameters_t new_calculation_parameters2(double fajrAngle, int ishaInterval);
 
-static inline calculation_parameters_t
-new_calculation_parameters3(double fajrAngle, double ishaAngle, calculation_method method);
+calculation_parameters_t new_calculation_parameters3(double fajrAngle, double ishaAngle, calculation_method method);
 
-static inline calculation_parameters_t
-new_calculation_parameters4(double fajrAngle, int ishaInterval, calculation_method method);
+calculation_parameters_t new_calculation_parameters4(double fajrAngle, int ishaInterval, calculation_method method);
 
 night_portions_t new_night_portions(double fajr, double isha);
 

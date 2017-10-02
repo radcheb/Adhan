@@ -34,9 +34,11 @@ static inline shadow_length getShadowLength(madhab_t madhab) {
 static char *get_madhab_name(madhab_t madhab){
     switch (madhab){
         case SHAFI:
-            return "Shafi";
+            return (char *) "Shafi";
         case HANAFI:
-            return "hanafi";
+            return (char *) "hanafi";
+        default:
+            return (char *) "Unknow madhab";
     }
 }
 #endif //C_MADHAB_H

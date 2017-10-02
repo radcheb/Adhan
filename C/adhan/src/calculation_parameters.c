@@ -13,7 +13,7 @@ calculation_parameters_t new_calculation_parameters(double fajrAngle, double ish
     return calculation_parameters;
 }
 
-inline calculation_parameters_t new_calculation_parameters2(double fajrAngle, int ishaInterval) {
+calculation_parameters_t new_calculation_parameters2(double fajrAngle, int ishaInterval) {
     calculation_method  method = OTHER;
     madhab_t madhab = SHAFI;
     high_latitude_rule_t highLatitudeRule = TWILIGHT_ANGLE;
@@ -22,8 +22,7 @@ inline calculation_parameters_t new_calculation_parameters2(double fajrAngle, in
     return calculation_parameters;
 }
 
-inline calculation_parameters_t
-new_calculation_parameters3(double fajrAngle, double ishaAngle, calculation_method method) {
+calculation_parameters_t new_calculation_parameters3(double fajrAngle, double ishaAngle, calculation_method method) {
     madhab_t madhab = SHAFI;
     high_latitude_rule_t highLatitudeRule = TWILIGHT_ANGLE;
     calculation_parameters_t calculation_parameters = (calculation_parameters_t) {method, fajrAngle, ishaAngle, 0, madhab, highLatitudeRule,
@@ -31,8 +30,7 @@ new_calculation_parameters3(double fajrAngle, double ishaAngle, calculation_meth
     return calculation_parameters;
 }
 
-inline calculation_parameters_t
-new_calculation_parameters4(double fajrAngle, int ishaInterval, calculation_method method) {
+calculation_parameters_t new_calculation_parameters4(double fajrAngle, int ishaInterval, calculation_method method) {
     madhab_t madhab = SHAFI;
     high_latitude_rule_t highLatitudeRule = TWILIGHT_ANGLE;
     calculation_parameters_t calculation_parameters = (calculation_parameters_t) {method, fajrAngle, 0, ishaInterval, madhab, highLatitudeRule,

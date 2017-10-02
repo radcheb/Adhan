@@ -64,23 +64,25 @@ typedef enum {
 static char * get_calculation_method_name(calculation_method method){
     switch (method){
         case MUSLIM_WORLD_LEAGUE:
-            return "Muslim World League";
+            return (char *) "Muslim World League";
         case EGYPTIAN:
-            return "Egyptian";
+            return (char *) "Egyptian";
         case KARACHI:
-            return "Karachi";
+            return (char *) "Karachi";
         case UMM_AL_QURA:
-            return "Umm Al Qura";
+            return (char *) "Umm Al Qura";
         case GULF:
-            return "gulf";
+            return (char *) "gulf";
         case MOON_SIGHTING_COMMITTEE:
-            return "Moon Sighting Committee";
+            return (char *) "Moon Sighting Committee";
         case KUWAIT:
-            return "Kuwait";
+            return (char *) "Kuwait";
         case QATAR:
-            return "Qatar";
+            return (char *) "Qatar";
         case OTHER:
-            return "Custom";
+            return (char *) "Custom";
+        default:
+            return (char *) "Unknow method";
     }
 }
 #endif //C_CALCULATION_METHOD_H

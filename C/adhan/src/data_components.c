@@ -89,14 +89,6 @@ time_t resolve_time(const date_components_t *date_components) {
     return resolve_time_2(date_components->year, date_components->month, date_components->day);
 }
 
-void setToLocalTz(struct tm *date) {
-    time_t now = time(0);
-    struct tm *local_date = localtime(&now);
-    date->tm_zone = local_date->tm_zone;
-    date->tm_isdst = local_date->tm_isdst;
-    date->tm_gmtoff = local_date->tm_gmtoff;
-}
-
 time_t resolve_time_2(int year, int month, int day) {
     struct tm tmp = {0};
     tmp.tm_year = year - 1900;
