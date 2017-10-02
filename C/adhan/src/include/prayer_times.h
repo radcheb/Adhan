@@ -21,9 +21,11 @@ typedef struct {
     time_t isha;
 } prayer_times_t;
 
-prayer_times_t* new_prayer_times(coordinates_t* coordinates, date_components_t* date, calculation_parameters_t* params);
+#define NULL_PRAYER_TIMES {0, 0, 0, 0, 0, 0};
 
-prayer_times_t* new_prayer_times2(coordinates_t* coordinates, time_t date, calculation_parameters_t* parameters);
+prayer_times_t new_prayer_times(coordinates_t* coordinates, date_components_t* date, calculation_parameters_t* params);
+
+prayer_times_t new_prayer_times2(coordinates_t* coordinates, time_t date, calculation_parameters_t* parameters);
 
 prayer_t currentPrayer(prayer_times_t* prayer_times);
 
