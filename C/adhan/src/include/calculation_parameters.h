@@ -27,16 +27,13 @@ typedef struct {
 }night_portions_t;
 
 static inline calculation_parameters_t _INIT_CALCULATION_PARAMETERS(double fajrAngle, double ishaAngle, int ishaInterval) {
-    calculation_parameters_t calculation_parameters = (calculation_parameters_t) {OTHER, fajrAngle, ishaAngle,
-                                                                                  ishaInterval, SHAFI, TWILIGHT_ANGLE,
+    calculation_parameters_t calculation_parameters = {OTHER, fajrAngle, ishaAngle, ishaInterval, SHAFI, TWILIGHT_ANGLE,
                                                                                   INIT_PRAYER_ADJUSTMENTS()};
     return calculation_parameters;
 }
 
 static inline calculation_parameters_t INIT_CALCULATION_PARAMETERS() {
-    calculation_parameters_t calculation_parameters = (calculation_parameters_t) {OTHER, 0, 0,
-                                                                                  0, SHAFI, TWILIGHT_ANGLE,
-                                                                                  INIT_PRAYER_ADJUSTMENTS()};
+    calculation_parameters_t calculation_parameters ={OTHER, 0, 0, 0, SHAFI, TWILIGHT_ANGLE, INIT_PRAYER_ADJUSTMENTS()};
     return calculation_parameters;
 }
 
