@@ -60,27 +60,27 @@ int main(int argc, char *argv[]) {
         time_t ref_date = add_yday(start_time, i);
         dateComponents = from_time_t(ref_date);
 
-        prayer_times_t *prayer_times = new_prayer_times(&coordinates, &dateComponents, &calculation_parameters);
+        prayer_times_t prayer_times = new_prayer_times(&coordinates, &dateComponents, &calculation_parameters);
 
         strftime(buffer, 80, "%x", localtime(&ref_date));
         printf(" %s\t", buffer);
 
-        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times->fajr));
+        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times.fajr));
         printf(" %s\t", buffer);
 
-        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times->sunrise));
+        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times.sunrise));
         printf(" %s\t", buffer);
 
-        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times->dhuhr));
+        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times.dhuhr));
         printf(" %s\t", buffer);
 
-        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times->asr));
+        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times.asr));
         printf(" %s\t", buffer);
 
-        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times->maghrib));
+        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times.maghrib));
         printf(" %s\t", buffer);
 
-        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times->isha));
+        strftime(buffer, 80, "%I:%M%p", localtime(&prayer_times.isha));
         printf(" %s\n", buffer);
     }
 

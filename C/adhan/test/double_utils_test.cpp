@@ -7,17 +7,6 @@ extern "C"
     #include "../src/include/astronomical.h"
 }
 
-//MATCHER_P2(IsBetween, a, b,
-//           std::string(negation ? "isn't" : "is") + " between " + ::testing::PrintToString(a) + " and " +
-//           ::testing::PrintToString(b)) {
-//    return a <= arg && arg <= b;
-//}
-//TEST(DoubleUtilsTest, angleConversion){
-//    float min_angle = 0.00001;
-//    float max_angle = 180.0;
-//    ASSERT_THAT(to_degrees(M_PI), IsBetween(min_angle, max_angle));
-//}
-
 TEST(DoubleUtilsTest, testNormalizing) {
     EXPECT_NEAR(normalize_with_bound(2.0, -5), -3, 0.00001);
 

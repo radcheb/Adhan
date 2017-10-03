@@ -8,12 +8,12 @@
 #include "include/prayer_times.h"
 #include "include/solar_time.h"
 
-inline prayer_times_t *
+inline prayer_times_t
 new_prayer_times(coordinates_t *coordinates, date_components_t *date, calculation_parameters_t *params) {
     return new_prayer_times2(coordinates, resolve_time(date), params);
 }
 
-prayer_times_t *new_prayer_times2(coordinates_t *coordinates, time_t date, calculation_parameters_t *parameters) {
+prayer_times_t new_prayer_times2(coordinates_t *coordinates, time_t date, calculation_parameters_t *parameters) {
     time_t tempFajr = 0;
     time_t tempSunrise = 0;
     time_t tempDhuhr = 0;
@@ -137,9 +137,8 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, time_t date, calcu
 
     if (error || !tempAsr) {
         // if we don't have all prayer times then initialization failed
-        return NULL;
+        return (prayer_times_t) NULL_PRAYER_TIMES;
     } else {
-        prayer_times_t *prayer_times = (prayer_times_t *) malloc(sizeof(prayer_times_t));
 
         time_t final_fajr_time = round_minute(add_minutes(tempFajr, parameters->adjustments.fajr));
         time_t final_sunrise_time = round_minute(add_minutes(tempSunrise, parameters->adjustments.sunrise));
@@ -150,9 +149,8 @@ prayer_times_t *new_prayer_times2(coordinates_t *coordinates, time_t date, calcu
                 add_minutes(tempMaghrib, parameters->adjustments.maghrib + maghribOffsetInMinutes));
         time_t final_isha_time = round_minute(add_minutes(tempIsha, parameters->adjustments.isha));
 
-        prayer_times_t tmp_prayer_times = {final_fajr_time, final_sunrise_time, final_dhuhr_time, final_asr_time,
+        prayer_times_t prayer_times = {final_fajr_time, final_sunrise_time, final_dhuhr_time, final_asr_time,
                                            final_maghrib_time, final_isha_time};
-        *prayer_times = tmp_prayer_times;
         return prayer_times;
     }
 }

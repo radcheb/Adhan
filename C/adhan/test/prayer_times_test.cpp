@@ -47,28 +47,28 @@ TEST(PrayerTimesTest, testPrayerTimes) {
     params.madhab = HANAFI;
 
     coordinates_t coordinates = {35.7750, -78.6336};
-    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, &params);
+    prayer_times_t prayerTimes = new_prayer_times(&coordinates, &date, &params);
 
     char destString[9];
 
     putenv((char *) "TZ=America/New_York");
 
-    getLocalStrTime(prayerTimes->fajr, destString);
+    getLocalStrTime(prayerTimes.fajr, destString);
     ASSERT_STREQ(destString, "04:42 AM");
 
-    getLocalStrTime(prayerTimes->sunrise, destString);
+    getLocalStrTime(prayerTimes.sunrise, destString);
     ASSERT_STREQ(destString, "06:08 AM");
 
-    getLocalStrTime(prayerTimes->dhuhr, destString);
+    getLocalStrTime(prayerTimes.dhuhr, destString);
     ASSERT_STREQ(destString, "01:21 PM");
 
-    getLocalStrTime(prayerTimes->asr, destString);
+    getLocalStrTime(prayerTimes.asr, destString);
     ASSERT_STREQ(destString, "06:22 PM");
 
-    getLocalStrTime(prayerTimes->maghrib, destString);
+    getLocalStrTime(prayerTimes.maghrib, destString);
     ASSERT_STREQ(destString, "08:32 PM");
 
-    getLocalStrTime(prayerTimes->isha, destString);
+    getLocalStrTime(prayerTimes.isha, destString);
     ASSERT_STREQ(destString, "09:57 PM");
 
     putenv((char *) "TZ=UTC");
@@ -80,58 +80,56 @@ TEST(PrayerTimesTest, testOffsets) {
     calculation_parameters_t params = getParameters(method);
 
     coordinates_t coordinates = {35.7750, -78.6336};
-    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, &params);
+    prayer_times_t prayerTimes = new_prayer_times(&coordinates, &date, &params);
 
     char destString[9];
 
     putenv((char *) "TZ=America/New_York");
 
-    getLocalStrTime(prayerTimes->fajr, destString);
+    getLocalStrTime(prayerTimes.fajr, destString);
     ASSERT_STREQ(destString, "05:35 AM");
 
-    getLocalStrTime(prayerTimes->sunrise, destString);
+    getLocalStrTime(prayerTimes.sunrise, destString);
     ASSERT_STREQ(destString, "07:06 AM");
 
-    getLocalStrTime(prayerTimes->dhuhr, destString);
+    getLocalStrTime(prayerTimes.dhuhr, destString);
     ASSERT_STREQ(destString, "12:05 PM");
 
-    getLocalStrTime(prayerTimes->asr, destString);
+    getLocalStrTime(prayerTimes.asr, destString);
     ASSERT_STREQ(destString, "02:42 PM");
 
-    getLocalStrTime(prayerTimes->maghrib, destString);
+    getLocalStrTime(prayerTimes.maghrib, destString);
     ASSERT_STREQ(destString, "05:01 PM");
 
-    getLocalStrTime(prayerTimes->isha, destString);
+    getLocalStrTime(prayerTimes.isha, destString);
     ASSERT_STREQ(destString, "06:26 PM");
 
     putenv((char *) "TZ=UTC");
-    free(prayerTimes);
 
     params.adjustments = {10, 10, 10, 10, 10, 10};
     prayerTimes = new_prayer_times(&coordinates, &date, &params);
 
     putenv((char *) "TZ=America/New_York");
 
-    getLocalStrTime(prayerTimes->fajr, destString);
+    getLocalStrTime(prayerTimes.fajr, destString);
     ASSERT_STREQ(destString, "05:45 AM");
 
-    getLocalStrTime(prayerTimes->sunrise, destString);
+    getLocalStrTime(prayerTimes.sunrise, destString);
     ASSERT_STREQ(destString, "07:16 AM");
 
-    getLocalStrTime(prayerTimes->dhuhr, destString);
+    getLocalStrTime(prayerTimes.dhuhr, destString);
     ASSERT_STREQ(destString, "12:15 PM");
 
-    getLocalStrTime(prayerTimes->asr, destString);
+    getLocalStrTime(prayerTimes.asr, destString);
     ASSERT_STREQ(destString, "02:52 PM");
 
-    getLocalStrTime(prayerTimes->maghrib, destString);
+    getLocalStrTime(prayerTimes.maghrib, destString);
     ASSERT_STREQ(destString, "05:11 PM");
 
-    getLocalStrTime(prayerTimes->isha, destString);
+    getLocalStrTime(prayerTimes.isha, destString);
     ASSERT_STREQ(destString, "06:36 PM");
 
     putenv((char *) "TZ=UTC");
-    free(prayerTimes);
 
     params.adjustments = INIT_PRAYER_ADJUSTMENTS();
 
@@ -139,26 +137,25 @@ TEST(PrayerTimesTest, testOffsets) {
 
     putenv((char *) "TZ=America/New_York");
 
-    getLocalStrTime(prayerTimes->fajr, destString);
+    getLocalStrTime(prayerTimes.fajr, destString);
     ASSERT_STREQ(destString, "05:35 AM");
 
-    getLocalStrTime(prayerTimes->sunrise, destString);
+    getLocalStrTime(prayerTimes.sunrise, destString);
     ASSERT_STREQ(destString, "07:06 AM");
 
-    getLocalStrTime(prayerTimes->dhuhr, destString);
+    getLocalStrTime(prayerTimes.dhuhr, destString);
     ASSERT_STREQ(destString, "12:05 PM");
 
-    getLocalStrTime(prayerTimes->asr, destString);
+    getLocalStrTime(prayerTimes.asr, destString);
     ASSERT_STREQ(destString, "02:42 PM");
 
-    getLocalStrTime(prayerTimes->maghrib, destString);
+    getLocalStrTime(prayerTimes.maghrib, destString);
     ASSERT_STREQ(destString, "05:01 PM");
 
-    getLocalStrTime(prayerTimes->isha, destString);
+    getLocalStrTime(prayerTimes.isha, destString);
     ASSERT_STREQ(destString, "06:26 PM");
 
     putenv((char *) "TZ=UTC");
-    free(prayerTimes);
 }
 
 TEST(PrayerTimesTest, testMoonsightingMethod) {
@@ -167,28 +164,28 @@ TEST(PrayerTimesTest, testMoonsightingMethod) {
     calculation_parameters_t params = getParameters(method);
 
     coordinates_t coordinates = {35.7750, -78.6336};
-    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, &params);
+    prayer_times_t prayerTimes = new_prayer_times(&coordinates, &date, &params);
 
     char destString[9];
 
     putenv((char *) "TZ=America/New_York");
 
-    getLocalStrTime(prayerTimes->fajr, destString);
+    getLocalStrTime(prayerTimes.fajr, destString);
     ASSERT_STREQ(destString, "05:48 AM");
 
-    getLocalStrTime(prayerTimes->sunrise, destString);
+    getLocalStrTime(prayerTimes.sunrise, destString);
     ASSERT_STREQ(destString, "07:16 AM");
 
-    getLocalStrTime(prayerTimes->dhuhr, destString);
+    getLocalStrTime(prayerTimes.dhuhr, destString);
     ASSERT_STREQ(destString, "12:33 PM");
 
-    getLocalStrTime(prayerTimes->asr, destString);
+    getLocalStrTime(prayerTimes.asr, destString);
     ASSERT_STREQ(destString, "03:20 PM");
 
-    getLocalStrTime(prayerTimes->maghrib, destString);
+    getLocalStrTime(prayerTimes.maghrib, destString);
     ASSERT_STREQ(destString, "05:43 PM");
 
-    getLocalStrTime(prayerTimes->isha, destString);
+    getLocalStrTime(prayerTimes.isha, destString);
     ASSERT_STREQ(destString, "07:05 PM");
 
     putenv((char *) "TZ=UTC");
@@ -201,28 +198,28 @@ TEST(PrayerTimesTest, testMoonsightingMethodHighLat) {
     params.madhab = HANAFI;
 
     coordinates_t coordinates = {59.9094, 10.7349};
-    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, &params);
+    prayer_times_t prayerTimes = new_prayer_times(&coordinates, &date, &params);
 
     char destString[9];
 
     putenv((char *) "TZ=Europe/Oslo");
 
-    getLocalStrTime(prayerTimes->fajr, destString);
+    getLocalStrTime(prayerTimes.fajr, destString);
     ASSERT_STREQ(destString, "07:34 AM");
 
-    getLocalStrTime(prayerTimes->sunrise, destString);
+    getLocalStrTime(prayerTimes.sunrise, destString);
     ASSERT_STREQ(destString, "09:19 AM");
 
-    getLocalStrTime(prayerTimes->dhuhr, destString);
+    getLocalStrTime(prayerTimes.dhuhr, destString);
     ASSERT_STREQ(destString, "12:25 PM");
 
-    getLocalStrTime(prayerTimes->asr, destString);
+    getLocalStrTime(prayerTimes.asr, destString);
     ASSERT_STREQ(destString, "01:36 PM");
 
-    getLocalStrTime(prayerTimes->maghrib, destString);
+    getLocalStrTime(prayerTimes.maghrib, destString);
     ASSERT_STREQ(destString, "03:25 PM");
 
-    getLocalStrTime(prayerTimes->isha, destString);
+    getLocalStrTime(prayerTimes.isha, destString);
     ASSERT_STREQ(destString, "05:02 PM");
 
 }
@@ -235,17 +232,16 @@ TEST(PrayerTimesTest, testTimeForPrayer) {
     params.highLatitudeRule = TWILIGHT_ANGLE;
 
     coordinates_t coordinates = {59.9094, 10.7349};
-    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, &params);
+    prayer_times_t prayerTimes = new_prayer_times(&coordinates, &date, &params);
 
     putenv((char *) "TZ=Europe/Oslo");
 
-    ASSERT_NE(prayerTimes, NULL);
-    ASSERT_EQ(prayerTimes->fajr, timeForPrayer(prayerTimes, FAJR));
-    ASSERT_EQ(prayerTimes->sunrise, timeForPrayer(prayerTimes, SUNRISE));
-    ASSERT_EQ(prayerTimes->dhuhr, timeForPrayer(prayerTimes, DHUHR));
-    ASSERT_EQ(prayerTimes->asr, timeForPrayer(prayerTimes, ASR));
-    ASSERT_EQ(prayerTimes->maghrib, timeForPrayer(prayerTimes, MAGHRIB));
-    ASSERT_EQ(prayerTimes->isha, timeForPrayer(prayerTimes, ISHA));
+    ASSERT_EQ(prayerTimes.fajr, timeForPrayer(&prayerTimes, FAJR));
+    ASSERT_EQ(prayerTimes.sunrise, timeForPrayer(&prayerTimes, SUNRISE));
+    ASSERT_EQ(prayerTimes.dhuhr, timeForPrayer(&prayerTimes, DHUHR));
+    ASSERT_EQ(prayerTimes.asr, timeForPrayer(&prayerTimes, ASR));
+    ASSERT_EQ(prayerTimes.maghrib, timeForPrayer(&prayerTimes, MAGHRIB));
+    ASSERT_EQ(prayerTimes.isha, timeForPrayer(&prayerTimes, ISHA));
 }
 
 TEST(PrayerTimesTest, testCurrentPrayer) {
@@ -256,17 +252,16 @@ TEST(PrayerTimesTest, testCurrentPrayer) {
     params.highLatitudeRule = TWILIGHT_ANGLE;
 
     coordinates_t coordinates = {33.720817, 73.090032};
-    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, &params);
+    prayer_times_t prayerTimes = new_prayer_times(&coordinates, &date, &params);
 
-    ASSERT_NE(prayerTimes, NULL);
-    ASSERT_EQ(currentPrayer2(prayerTimes, add_seconds(prayerTimes->fajr, -1)), NONE);
-    ASSERT_EQ(currentPrayer2(prayerTimes, prayerTimes->fajr), FAJR);
-    ASSERT_EQ(currentPrayer2(prayerTimes, add_seconds(prayerTimes->fajr, 1)), FAJR);
-    ASSERT_EQ(currentPrayer2(prayerTimes, add_seconds(prayerTimes->sunrise, 1)), SUNRISE);
-    ASSERT_EQ(currentPrayer2(prayerTimes, add_seconds(prayerTimes->dhuhr, 1)), DHUHR);
-    ASSERT_EQ(currentPrayer2(prayerTimes, add_seconds(prayerTimes->asr, 1)), ASR);
-    ASSERT_EQ(currentPrayer2(prayerTimes, add_seconds(prayerTimes->maghrib, 1)), MAGHRIB);
-    ASSERT_EQ(currentPrayer2(prayerTimes, add_seconds(prayerTimes->isha, 1)), ISHA);
+    ASSERT_EQ(currentPrayer2(&prayerTimes, add_seconds(prayerTimes.fajr, -1)), NONE);
+    ASSERT_EQ(currentPrayer2(&prayerTimes, prayerTimes.fajr), FAJR);
+    ASSERT_EQ(currentPrayer2(&prayerTimes, add_seconds(prayerTimes.fajr, 1)), FAJR);
+    ASSERT_EQ(currentPrayer2(&prayerTimes, add_seconds(prayerTimes.sunrise, 1)), SUNRISE);
+    ASSERT_EQ(currentPrayer2(&prayerTimes, add_seconds(prayerTimes.dhuhr, 1)), DHUHR);
+    ASSERT_EQ(currentPrayer2(&prayerTimes, add_seconds(prayerTimes.asr, 1)), ASR);
+    ASSERT_EQ(currentPrayer2(&prayerTimes, add_seconds(prayerTimes.maghrib, 1)), MAGHRIB);
+    ASSERT_EQ(currentPrayer2(&prayerTimes, add_seconds(prayerTimes.isha, 1)), ISHA);
 }
 
 TEST(PrayerTimesTest, testNextPrayer) {
@@ -277,15 +272,14 @@ TEST(PrayerTimesTest, testNextPrayer) {
     params.highLatitudeRule = TWILIGHT_ANGLE;
 
     coordinates_t coordinates = {33.720817, 73.090032};
-    prayer_times_t *prayerTimes = new_prayer_times(&coordinates, &date, &params);
+    prayer_times_t prayerTimes = new_prayer_times(&coordinates, &date, &params);
 
-    ASSERT_NE(prayerTimes, NULL);
-    ASSERT_EQ(next_prayer2(prayerTimes, add_seconds(prayerTimes->fajr, -1)), FAJR);
-    ASSERT_EQ(next_prayer2(prayerTimes, prayerTimes->fajr), SUNRISE);
-    ASSERT_EQ(next_prayer2(prayerTimes, add_seconds(prayerTimes->fajr, 1)), SUNRISE);
-    ASSERT_EQ(next_prayer2(prayerTimes, add_seconds(prayerTimes->sunrise, 1)), DHUHR);
-    ASSERT_EQ(next_prayer2(prayerTimes, add_seconds(prayerTimes->dhuhr, 1)), ASR);
-    ASSERT_EQ(next_prayer2(prayerTimes, add_seconds(prayerTimes->asr, 1)), MAGHRIB);
-    ASSERT_EQ(next_prayer2(prayerTimes, add_seconds(prayerTimes->maghrib, 1)), ISHA);
-    ASSERT_EQ(next_prayer2(prayerTimes, add_seconds(prayerTimes->isha, 1)), NONE);
+    ASSERT_EQ(next_prayer2(&prayerTimes, add_seconds(prayerTimes.fajr, -1)), FAJR);
+    ASSERT_EQ(next_prayer2(&prayerTimes, prayerTimes.fajr), SUNRISE);
+    ASSERT_EQ(next_prayer2(&prayerTimes, add_seconds(prayerTimes.fajr, 1)), SUNRISE);
+    ASSERT_EQ(next_prayer2(&prayerTimes, add_seconds(prayerTimes.sunrise, 1)), DHUHR);
+    ASSERT_EQ(next_prayer2(&prayerTimes, add_seconds(prayerTimes.dhuhr, 1)), ASR);
+    ASSERT_EQ(next_prayer2(&prayerTimes, add_seconds(prayerTimes.asr, 1)), MAGHRIB);
+    ASSERT_EQ(next_prayer2(&prayerTimes, add_seconds(prayerTimes.maghrib, 1)), ISHA);
+    ASSERT_EQ(next_prayer2(&prayerTimes, add_seconds(prayerTimes.isha, 1)), NONE);
 }

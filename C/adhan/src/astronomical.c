@@ -7,11 +7,11 @@
 #include "include/astronomical.h"
 
 double to_radius(double deg) {
-    return deg * ( M_PI/ 180.0 );
+    return deg * ( PI/ 180.0 );
 }
 
 double to_degrees(double radians) {
-    return radians * (180.0 / M_PI);
+    return radians * (180.0 / PI);
 }
 
 double meanSolarLongitude(double T) {
