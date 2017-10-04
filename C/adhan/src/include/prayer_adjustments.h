@@ -36,7 +36,7 @@ typedef struct {
 } prayer_adjustments_t;
 
 static inline prayer_adjustments_t INIT_PRAYER_ADJUSTMENTS(){
-    prayer_adjustments_t  prayer_adjustments = (prayer_adjustments_t){0, 0, 0, 0, 0, 0};
+    prayer_adjustments_t  prayer_adjustments = {0, 0, 0, 0, 0, 0};
     return prayer_adjustments;
 }
 

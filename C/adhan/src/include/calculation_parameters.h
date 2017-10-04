@@ -27,28 +27,23 @@ typedef struct {
 }night_portions_t;
 
 static inline calculation_parameters_t _INIT_CALCULATION_PARAMETERS(double fajrAngle, double ishaAngle, int ishaInterval) {
-    calculation_parameters_t calculation_parameters = (calculation_parameters_t) {OTHER, fajrAngle, ishaAngle,
-                                                                                  ishaInterval, SHAFI, TWILIGHT_ANGLE,
+    calculation_parameters_t calculation_parameters = {OTHER, fajrAngle, ishaAngle, ishaInterval, SHAFI, TWILIGHT_ANGLE,
                                                                                   INIT_PRAYER_ADJUSTMENTS()};
     return calculation_parameters;
 }
 
 static inline calculation_parameters_t INIT_CALCULATION_PARAMETERS() {
-    calculation_parameters_t calculation_parameters = (calculation_parameters_t) {OTHER, 0, 0,
-                                                                                  0, SHAFI, TWILIGHT_ANGLE,
-                                                                                  INIT_PRAYER_ADJUSTMENTS()};
+    calculation_parameters_t calculation_parameters ={OTHER, 0, 0, 0, SHAFI, TWILIGHT_ANGLE, INIT_PRAYER_ADJUSTMENTS()};
     return calculation_parameters;
 }
 
 calculation_parameters_t new_calculation_parameters(double fajrAngle, double ishaAngle);
 
-static inline calculation_parameters_t new_calculation_parameters2(double fajrAngle, int ishaInterval);
+calculation_parameters_t new_calculation_parameters2(double fajrAngle, int ishaInterval);
 
-static inline calculation_parameters_t
-new_calculation_parameters3(double fajrAngle, double ishaAngle, calculation_method method);
+calculation_parameters_t new_calculation_parameters3(double fajrAngle, double ishaAngle, calculation_method method);
 
-static inline calculation_parameters_t
-new_calculation_parameters4(double fajrAngle, int ishaInterval, calculation_method method);
+calculation_parameters_t new_calculation_parameters4(double fajrAngle, int ishaInterval, calculation_method method);
 
 night_portions_t new_night_portions(double fajr, double isha);
 
