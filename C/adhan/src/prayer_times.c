@@ -155,11 +155,6 @@ prayer_times_t new_prayer_times2(coordinates_t *coordinates, time_t date, calcul
     }
 }
 
-prayer_t currentPrayer(prayer_times_t *prayer_times) {
-    time_t now = time(0);
-    return currentPrayer2(prayer_times, now);
-}
-
 prayer_t currentPrayer2(prayer_times_t *prayer_times, time_t when) {
     if (prayer_times->isha - when <= 0) {
         return ISHA;
@@ -176,11 +171,6 @@ prayer_t currentPrayer2(prayer_times_t *prayer_times, time_t when) {
     } else {
         return NONE;
     }
-}
-
-prayer_t next_prayer(prayer_times_t *prayer_times) {
-    time_t now = time(0);
-    return next_prayer2(prayer_times, now);
 }
 
 prayer_t next_prayer2(prayer_times_t *prayer_times, time_t when) {

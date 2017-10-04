@@ -47,7 +47,7 @@ int main(int argc, char *argv[]) {
 
 
 
-    time_t now = time(0);
+    time_t now = resolve_time_2(2017, 10, 01);
     time_t start_time = add_yday(now, - 30 - 16);
 
     date_components_t dateComponents = from_time_t(start_time);
