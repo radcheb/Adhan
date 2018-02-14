@@ -27,6 +27,8 @@ prayer_times_t new_prayer_times(coordinates_t* coordinates, date_components_t* d
 
 prayer_times_t new_prayer_times2(coordinates_t* coordinates, time_t date, calculation_parameters_t* parameters);
 
+prayer_times_t new_prayer_times_with_tz(coordinates_t* coordinates, time_t date, calculation_parameters_t* parameters, int tz);
+
 prayer_t currentPrayer(prayer_times_t* prayer_times);
 
 prayer_t currentPrayer2(prayer_times_t* prayer_times, time_t when);

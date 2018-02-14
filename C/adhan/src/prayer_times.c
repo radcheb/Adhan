@@ -4,6 +4,7 @@
 
 
 #include <calculation_parameters.h>
+#include <prayer_times.h>
 #include "math.h"
 #include "include/prayer_times.h"
 #include "include/solar_time.h"
@@ -153,6 +154,17 @@ prayer_times_t new_prayer_times2(coordinates_t *coordinates, time_t date, calcul
                                            final_maghrib_time, final_isha_time};
         return prayer_times;
     }
+}
+
+prayer_times_t new_prayer_times_with_tz(coordinates_t* coordinates, time_t date, calculation_parameters_t* parameters, int tz){
+    prayer_times_t prayer_times = new_prayer_times2(coordinates, date, parameters);
+    prayer_times.fajr = add_hours(prayer_times.fajr, tz);
+    prayer_times.sunrise = add_hours(prayer_times.sunrise, tz);
+    prayer_times.dhuhr = add_hours(prayer_times.dhuhr, tz);
+    prayer_times.asr= add_hours(prayer_times.asr, tz);
+    prayer_times.maghrib= add_hours(prayer_times.maghrib, tz);
+    prayer_times.isha=  add_hours(prayer_times.isha, tz);
+    return prayer_times;
 }
 
 prayer_t currentPrayer2(prayer_times_t *prayer_times, time_t when) {

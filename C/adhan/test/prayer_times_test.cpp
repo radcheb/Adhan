@@ -283,3 +283,35 @@ TEST(PrayerTimesTest, testNextPrayer) {
     ASSERT_EQ(next_prayer2(&prayerTimes, add_seconds(prayerTimes.maghrib, 1)), ISHA);
     ASSERT_EQ(next_prayer2(&prayerTimes, add_seconds(prayerTimes.isha, 1)), NONE);
 }
+
+TEST(PrayerTimesTest, testPrayerTimesInTimezone) {
+    time_t date = resolve_time_2(2016, 1, 1);
+    calculation_method method = MOON_SIGHTING_COMMITTEE;
+    calculation_parameters_t params = getParameters(method);
+    params.madhab = HANAFI;
+
+    int tz = 1;
+    coordinates_t coordinates = {59.9094, 10.7349};
+    prayer_times_t prayerTimes = new_prayer_times_with_tz(&coordinates, date, &params, tz);
+
+    char destString[9];
+
+    getLocalStrTime(prayerTimes.fajr, destString);
+    ASSERT_STREQ(destString, "07:34 AM");
+
+    getLocalStrTime(prayerTimes.sunrise, destString);
+    ASSERT_STREQ(destString, "09:19 AM");
+
+    getLocalStrTime(prayerTimes.dhuhr, destString);
+    ASSERT_STREQ(destString, "12:25 PM");
+
+    getLocalStrTime(prayerTimes.asr, destString);
+    ASSERT_STREQ(destString, "01:36 PM");
+
+    getLocalStrTime(prayerTimes.maghrib, destString);
+    ASSERT_STREQ(destString, "03:25 PM");
+
+    getLocalStrTime(prayerTimes.isha, destString);
+    ASSERT_STREQ(destString, "05:02 PM");
+
+}
