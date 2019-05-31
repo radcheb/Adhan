@@ -5,14 +5,14 @@ project(Adhan-Test)
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fpermissive")
 
-set(REPO ${PROJECT_SOURCE_DIR}/../.repo)
+set(TOOLS ${PROJECT_SOURCE_DIR}/../tools)
 
 enable_language(CXX)
 include(CTest)
 enable_testing()
 
 #set(gtest_disable_pthreads on) #needed in MinGW
-include(${REPO}/DownloadProject/DownloadProject.cmake)
+include(${TOOLS}/DownloadProject/DownloadProject.cmake)
 download_project(
         PROJ                googletest
         GIT_REPOSITORY      https://github.com/google/googletest.git
