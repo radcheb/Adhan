@@ -16,7 +16,7 @@ Adhan is available for the following languages:
 - Swift [(Usage and examples)](Swift/)
 - JavaScript [(Usage and examples)](JavaScript/)
 - Java [(Usage and examples)](java/)
-- C (C99) [(Ongoing)](C/adhan/)
+- C (C99) [(Usage and examples)](C/adhan/)
 
 ## Roadmap
 
